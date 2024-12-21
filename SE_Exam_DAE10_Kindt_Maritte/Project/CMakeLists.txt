@@ -8,7 +8,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 include(FetchContent)
 
 # Fetch LUA
-# ++++++++++
 FetchContent_Declare(
     lua
     URL https://github.com/marovira/lua/archive/refs/tags/5.4.4.tar.gz
@@ -17,7 +16,6 @@ FetchContent_MakeAvailable(lua)
 
 
 # Fetch SOL2
-# ++++++++++
 FetchContent_Declare(
     sol2
     URL https://github.com/ThePhD/sol2/archive/refs/tags/v3.3.0.tar.gz
@@ -25,15 +23,13 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(sol2)
 
 # Fetch SDL2
-# ++++++++++
 FetchContent_Declare(
     sdl
     URL https://github.com/libsdl-org/SDL/releases/download/release-2.30.9/SDL2-2.30.9.tar.gz
 )
 FetchContent_MakeAvailable(sdl)
 
-# Gather Sources
-# ++++++++++++++
+# Gather sources
 list(APPEND SOURCES 
             "src/Game.cpp"
             "src/GameEngine.cpp"
@@ -41,11 +37,12 @@ list(APPEND SOURCES
             "src/GameWinMain.cpp"
 )
 
-#list(APPEND LUA_SOURCES 
-#            "script.lua")
+list(APPEND LUA_SOURCES 
+            "annotations.lua"
+            "game_breakout.lua"
+)
 
-# Executable Target
-# +++++++++++++++++
+# Executable target
 set(EXE_NAME SELua)
 add_executable(${EXE_NAME} ${SOURCES} ${LUA_SOURCES})
 target_link_libraries(${EXE_NAME} PRIVATE SDL2::SDL2-static lua::lua sol2)
@@ -60,8 +57,7 @@ if (WIN32)
     set_target_properties(${EXE_NAME} PROPERTIES LINK_FLAGS "/ENTRY:wWinMainCRTStartup")
 endif()
 
-# Copy Lua Scripts
-# ++++++++++++++++
+# Copy Lua scripts
 add_custom_target(CopyScripts ALL
     COMMENT "Copying Lua scripts to output directory"
 )

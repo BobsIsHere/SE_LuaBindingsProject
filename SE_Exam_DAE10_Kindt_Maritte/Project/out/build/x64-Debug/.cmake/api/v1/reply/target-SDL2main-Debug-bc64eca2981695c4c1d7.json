@@ -59,7 +59,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "/DWIN32 /D_WINDOWS /W3   -DSDL_BUILD_MAJOR_VERSION=2 -DSDL_BUILD_MINOR_VERSION=30 -DSDL_BUILD_MICRO_VERSION=9 /MDd /Zi /Ob0 /Od  -MDd"
+					"fragment" : "/DWIN32 /D_WINDOWS   -DSDL_BUILD_MAJOR_VERSION=2 -DSDL_BUILD_MINOR_VERSION=30 -DSDL_BUILD_MICRO_VERSION=9 /Zi /Ob0 /Od  -MDd"
 				}
 			],
 			"includes" : 

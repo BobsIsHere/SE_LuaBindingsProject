@@ -9,6 +9,7 @@
 // Include Files
 //-----------------------------------------------------------------
 
+#include <sol/sol.hpp>
 #include "Resource.h"	
 #include "GameEngine.h"
 #include "AbstractGame.h"
@@ -37,24 +38,21 @@ public:
 	//---------------------------
 	// General Member Functions
 	//---------------------------
-	void Initialize			()															override;
-	void Start				()															override;
-	void End				()															override;
-	void Paint				(RECT rect)	const											override;
-	void Tick				()															override;
-	void MouseButtonAction	(bool isLeft, bool isDown, int x, int y, WPARAM wParam)		override;
-	void MouseWheelAction	(int x, int y, int distance, WPARAM wParam)					override;
-	void MouseMove			(int x, int y, WPARAM wParam)								override;
-	void CheckKeyboard		()															override;
-	void KeyPressed			(TCHAR key)													override;
-	
-	void CallAction			(Caller* callerPtr)											override;
+	void Initialize() override;
+	void Start() override;
+	void End() override;
+	void Paint(RECT rect) const override;
+	void Tick() override;
+	void MouseButtonAction(bool isLeft, bool isDown, int x, int y, WPARAM wParam) override;
+	void MouseWheelAction(int x, int y, int distance, WPARAM wParam) override;
+	void MouseMove(int x, int y, WPARAM wParam) override;
+	void CheckKeyboard() override;
+	void KeyPressed(TCHAR key) override;
+	void CallAction(Caller* callerPtr) override;
 
 private:
 	// -------------------------
 	// Datamembers
 	// -------------------------
-
-
-
+	
 };

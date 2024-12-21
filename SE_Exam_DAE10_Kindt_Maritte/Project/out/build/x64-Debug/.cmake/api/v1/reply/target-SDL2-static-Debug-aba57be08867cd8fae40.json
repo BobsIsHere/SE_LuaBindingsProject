@@ -1,14 +1,18 @@
 {
+	"archive" : 
+	{
+		"commandFragments" : 
+		[
+			{
+				"fragment" : "/machine:x64",
+				"role" : "flags"
+			}
+		]
+	},
 	"artifacts" : 
 	[
 		{
-			"path" : "_deps/sdl-build/SDL2d.dll"
-		},
-		{
-			"path" : "_deps/sdl-build/SDL2d.lib"
-		},
-		{
-			"path" : "_deps/sdl-build/SDL2d.pdb"
+			"path" : "_deps/sdl-build/SDL2-staticd.lib"
 		}
 	],
 	"backtrace" : 1,
@@ -17,9 +21,10 @@
 		"commands" : 
 		[
 			"add_library",
-			"target_link_libraries",
 			"add_dependencies",
 			"set_property",
+			"target_link_libraries",
+			"target_compile_definitions",
 			"target_include_directories"
 		],
 		"files" : 
@@ -34,37 +39,37 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 3393,
+				"line" : 3467,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 3441,
+				"line" : 3468,
 				"parent" : 0
 			},
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 3394,
+				"line" : 3533,
 				"parent" : 0
 			},
 			{
 				"command" : 3,
 				"file" : 0,
-				"line" : 3533,
-				"parent" : 0
-			},
-			{
-				"command" : 1,
-				"file" : 0,
-				"line" : 3450,
+				"line" : 3486,
 				"parent" : 0
 			},
 			{
 				"command" : 4,
 				"file" : 0,
-				"line" : 3442,
+				"line" : 3474,
+				"parent" : 0
+			},
+			{
+				"command" : 5,
+				"file" : 0,
+				"line" : 3478,
 				"parent" : 0
 			}
 		]
@@ -75,40 +80,41 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "/DWIN32 /D_WINDOWS /W3   -DSDL_BUILD_MAJOR_VERSION=2 -DSDL_BUILD_MINOR_VERSION=30 -DSDL_BUILD_MICRO_VERSION=9 /MDd /Zi /Ob0 /Od  -MDd"
+					"fragment" : "/DWIN32 /D_WINDOWS   -DSDL_BUILD_MAJOR_VERSION=2 -DSDL_BUILD_MINOR_VERSION=30 -DSDL_BUILD_MICRO_VERSION=9 /Zi /Ob0 /Od  -MDd"
 				},
 				{
-					"backtrace" : 4,
+					"backtrace" : 3,
 					"fragment" : "/GS-"
 				},
 				{
-					"backtrace" : 4,
+					"backtrace" : 3,
 					"fragment" : "/Gs1048576"
 				},
 				{
-					"backtrace" : 5,
+					"backtrace" : 4,
 					"fragment" : "/MP"
 				}
 			],
 			"defines" : 
 			[
 				{
-					"define" : "DLL_EXPORT"
+					"backtrace" : 5,
+					"define" : "SDL_STATIC_LIB"
 				},
 				{
-					"backtrace" : 5,
+					"backtrace" : 4,
 					"define" : "USING_GENERATED_CONFIG_H"
 				},
 				{
-					"backtrace" : 5,
+					"backtrace" : 4,
 					"define" : "_CRT_NONSTDC_NO_DEPRECATE"
 				},
 				{
-					"backtrace" : 5,
+					"backtrace" : 4,
 					"define" : "_CRT_SECURE_NO_DEPRECATE"
 				},
 				{
-					"backtrace" : 5,
+					"backtrace" : 4,
 					"define" : "_CRT_SECURE_NO_WARNINGS"
 				}
 			],
@@ -127,11 +133,11 @@
 					"path" : "C:/GitHubFiles/SE_LuaBindingsProject/SE_Exam_DAE10_Kindt_Maritte/Project/out/build/x64-Debug/_deps/sdl-build/include-config-debug/SDL2"
 				},
 				{
-					"backtrace" : 5,
+					"backtrace" : 4,
 					"path" : "C:/GitHubFiles/SE_LuaBindingsProject/SE_Exam_DAE10_Kindt_Maritte/Project/out/build/x64-Debug/_deps/sdl-build/include-config-debug"
 				},
 				{
-					"backtrace" : 5,
+					"backtrace" : 4,
 					"path" : "C:/GitHubFiles/SE_LuaBindingsProject/SE_Exam_DAE10_Kindt_Maritte/Project/out/build/x64-Debug/_deps/sdl-src/src/video/khronos"
 				}
 			],
@@ -339,18 +345,18 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "/DWIN32 /D_WINDOWS /W3   -DSDL_BUILD_MAJOR_VERSION=2 -DSDL_BUILD_MINOR_VERSION=30 -DSDL_BUILD_MICRO_VERSION=9 /MDd /Zi /Ob0 /Od  -MDd"
+					"fragment" : "/DWIN32 /D_WINDOWS   -DSDL_BUILD_MAJOR_VERSION=2 -DSDL_BUILD_MINOR_VERSION=30 -DSDL_BUILD_MICRO_VERSION=9 /Zi /Ob0 /Od  -MDd"
 				},
 				{
-					"backtrace" : 4,
+					"backtrace" : 3,
 					"fragment" : "/GS-"
 				},
 				{
-					"backtrace" : 4,
+					"backtrace" : 3,
 					"fragment" : "/Gs1048576"
 				},
 				{
-					"backtrace" : 5,
+					"backtrace" : 4,
 					"fragment" : "/MP"
 				},
 				{
@@ -360,22 +366,23 @@
 			"defines" : 
 			[
 				{
-					"define" : "DLL_EXPORT"
+					"backtrace" : 5,
+					"define" : "SDL_STATIC_LIB"
 				},
 				{
-					"backtrace" : 5,
+					"backtrace" : 4,
 					"define" : "USING_GENERATED_CONFIG_H"
 				},
 				{
-					"backtrace" : 5,
+					"backtrace" : 4,
 					"define" : "_CRT_NONSTDC_NO_DEPRECATE"
 				},
 				{
-					"backtrace" : 5,
+					"backtrace" : 4,
 					"define" : "_CRT_SECURE_NO_DEPRECATE"
 				},
 				{
-					"backtrace" : 5,
+					"backtrace" : 4,
 					"define" : "_CRT_SECURE_NO_WARNINGS"
 				}
 			],
@@ -394,11 +401,11 @@
 					"path" : "C:/GitHubFiles/SE_LuaBindingsProject/SE_Exam_DAE10_Kindt_Maritte/Project/out/build/x64-Debug/_deps/sdl-build/include-config-debug/SDL2"
 				},
 				{
-					"backtrace" : 5,
+					"backtrace" : 4,
 					"path" : "C:/GitHubFiles/SE_LuaBindingsProject/SE_Exam_DAE10_Kindt_Maritte/Project/out/build/x64-Debug/_deps/sdl-build/include-config-debug"
 				},
 				{
-					"backtrace" : 5,
+					"backtrace" : 4,
 					"path" : "C:/GitHubFiles/SE_LuaBindingsProject/SE_Exam_DAE10_Kindt_Maritte/Project/out/build/x64-Debug/_deps/sdl-src/src/video/khronos"
 				}
 			],
@@ -407,156 +414,18 @@
 			[
 				95
 			]
-		},
-		{
-			"compileCommandFragments" : 
-			[
-				{
-					"fragment" : "-DWIN32 -D_DEBUG"
-				}
-			],
-			"defines" : 
-			[
-				{
-					"define" : "DLL_EXPORT"
-				},
-				{
-					"backtrace" : 5,
-					"define" : "USING_GENERATED_CONFIG_H"
-				},
-				{
-					"backtrace" : 5,
-					"define" : "_CRT_NONSTDC_NO_DEPRECATE"
-				},
-				{
-					"backtrace" : 5,
-					"define" : "_CRT_SECURE_NO_DEPRECATE"
-				},
-				{
-					"backtrace" : 5,
-					"define" : "_CRT_SECURE_NO_WARNINGS"
-				}
-			],
-			"includes" : 
-			[
-				{
-					"backtrace" : 6,
-					"path" : "C:/GitHubFiles/SE_LuaBindingsProject/SE_Exam_DAE10_Kindt_Maritte/Project/out/build/x64-Debug/_deps/sdl-build/include"
-				},
-				{
-					"backtrace" : 6,
-					"path" : "C:/GitHubFiles/SE_LuaBindingsProject/SE_Exam_DAE10_Kindt_Maritte/Project/out/build/x64-Debug/_deps/sdl-build/include/SDL2"
-				},
-				{
-					"backtrace" : 6,
-					"path" : "C:/GitHubFiles/SE_LuaBindingsProject/SE_Exam_DAE10_Kindt_Maritte/Project/out/build/x64-Debug/_deps/sdl-build/include-config-debug/SDL2"
-				},
-				{
-					"backtrace" : 5,
-					"path" : "C:/GitHubFiles/SE_LuaBindingsProject/SE_Exam_DAE10_Kindt_Maritte/Project/out/build/x64-Debug/_deps/sdl-build/include-config-debug"
-				},
-				{
-					"backtrace" : 5,
-					"path" : "C:/GitHubFiles/SE_LuaBindingsProject/SE_Exam_DAE10_Kindt_Maritte/Project/out/build/x64-Debug/_deps/sdl-src/src/video/khronos"
-				}
-			],
-			"language" : "RC",
-			"sourceIndexes" : 
-			[
-				196
-			]
 		}
 	],
 	"dependencies" : 
 	[
 		{
-			"backtrace" : 3,
+			"backtrace" : 2,
 			"id" : "sdl_headers_copy::@fc7b397d5a055aba6d5e"
 		}
 	],
-	"id" : "SDL2::@fc7b397d5a055aba6d5e",
-	"link" : 
-	{
-		"commandFragments" : 
-		[
-			{
-				"fragment" : "/machine:x64 /debug /INCREMENTAL  /NODEFAULTLIB",
-				"role" : "flags"
-			},
-			{
-				"backtrace" : 2,
-				"fragment" : "kernel32.lib",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 2,
-				"fragment" : "user32.lib",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 2,
-				"fragment" : "gdi32.lib",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 2,
-				"fragment" : "winmm.lib",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 2,
-				"fragment" : "imm32.lib",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 2,
-				"fragment" : "ole32.lib",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 2,
-				"fragment" : "oleaut32.lib",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 2,
-				"fragment" : "version.lib",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 2,
-				"fragment" : "uuid.lib",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 2,
-				"fragment" : "advapi32.lib",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 2,
-				"fragment" : "setupapi.lib",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 2,
-				"fragment" : "shell32.lib",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 2,
-				"fragment" : "dinput8.lib",
-				"role" : "libraries"
-			},
-			{
-				"fragment" : "kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib",
-				"role" : "libraries"
-			}
-		],
-		"language" : "C"
-	},
-	"name" : "SDL2",
-	"nameOnDisk" : "SDL2d.dll",
+	"id" : "SDL2-static::@fc7b397d5a055aba6d5e",
+	"name" : "SDL2-static",
+	"nameOnDisk" : "SDL2-staticd.lib",
 	"paths" : 
 	{
 		"build" : "_deps/sdl-build",
@@ -763,8 +632,7 @@
 				192,
 				193,
 				194,
-				195,
-				196
+				195
 			]
 		}
 	],
@@ -1945,13 +1813,7 @@
 			"compileGroupIndex" : 0,
 			"path" : "out/build/x64-Debug/_deps/sdl-src/src/haptic/windows/SDL_xinputhaptic.c",
 			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 2,
-			"path" : "out/build/x64-Debug/_deps/sdl-src/src/main/windows/version.rc",
-			"sourceGroupIndex" : 0
 		}
 	],
-	"type" : "SHARED_LIBRARY"
+	"type" : "STATIC_LIBRARY"
 }

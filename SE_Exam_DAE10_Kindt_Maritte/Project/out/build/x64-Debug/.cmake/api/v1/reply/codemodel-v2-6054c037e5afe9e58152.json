@@ -279,7 +279,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "CopyScripts::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-CopyScripts-Debug-293f3b35cffed0c2df24.json",
+					"jsonFile" : "target-CopyScripts-Debug-a4d366255fde6ccee5ea.json",
 					"name" : "CopyScripts",
 					"projectIndex" : 0
 				},
@@ -419,42 +419,42 @@
 				{
 					"directoryIndex" : 4,
 					"id" : "SDL2::@fc7b397d5a055aba6d5e",
-					"jsonFile" : "target-SDL2-Debug-1fec1458addbbd8b1c7b.json",
+					"jsonFile" : "target-SDL2-Debug-9b52704b46e7c5624eca.json",
 					"name" : "SDL2",
 					"projectIndex" : 3
 				},
 				{
 					"directoryIndex" : 4,
 					"id" : "SDL2-static::@fc7b397d5a055aba6d5e",
-					"jsonFile" : "target-SDL2-static-Debug-e7697c1fc17323aeb18b.json",
+					"jsonFile" : "target-SDL2-static-Debug-aba57be08867cd8fae40.json",
 					"name" : "SDL2-static",
 					"projectIndex" : 3
 				},
 				{
 					"directoryIndex" : 4,
 					"id" : "SDL2_test::@fc7b397d5a055aba6d5e",
-					"jsonFile" : "target-SDL2_test-Debug-ee138f9f9d6e70fc806e.json",
+					"jsonFile" : "target-SDL2_test-Debug-edd6fc96636230d7fc1c.json",
 					"name" : "SDL2_test",
 					"projectIndex" : 3
 				},
 				{
 					"directoryIndex" : 4,
 					"id" : "SDL2main::@fc7b397d5a055aba6d5e",
-					"jsonFile" : "target-SDL2main-Debug-13f9dfb7f1efa2f4154f.json",
+					"jsonFile" : "target-SDL2main-Debug-bc64eca2981695c4c1d7.json",
 					"name" : "SDL2main",
 					"projectIndex" : 3
 				},
 				{
 					"directoryIndex" : 0,
 					"id" : "SELua::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-SELua-Debug-2f3db4eeb32fab9e9c1c.json",
+					"jsonFile" : "target-SELua-Debug-535712bc6522aafafe2a.json",
 					"name" : "SELua",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 1,
 					"id" : "lua_lib::@2dc84297423e1c3ed672",
-					"jsonFile" : "target-lua_lib-Debug-5e979079303e7b42d664.json",
+					"jsonFile" : "target-lua_lib-Debug-6eaa281f4fa8cac794f9.json",
 					"name" : "lua_lib",
 					"projectIndex" : 1
 				},
