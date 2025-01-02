@@ -209,7 +209,7 @@ public:
 //------------------------------------------------------------------------------------------------
 // Caller Base Class
 //
-// Base Clase implementation for up- and downcasting of "caller" objects: TextBox, Button, Timer, Audio and Video
+// Base Class implementation for up- and downcasting of "caller" objects: TextBox, Button, Timer, Audio and Video
 //------------------------------------------------------------------------------------------------
 class Caller
 {

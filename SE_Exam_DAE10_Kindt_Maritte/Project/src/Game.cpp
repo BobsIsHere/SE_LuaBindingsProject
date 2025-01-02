@@ -26,24 +26,55 @@ void Game::Initialize()
 {
 	// Code that needs to execute (once) at the start of the game, before the game window is created
 
-	AbstractGame::Initialize();
-	GAME_ENGINE->SetTitle(_T("Game Engine version 8_01"));	
+	/*AbstractGame::Initialize();
+	GAME_ENGINE->SetTitle(_T("Game Engine version 8_01 C++"));	
 	
 	GAME_ENGINE->SetWidth(1024);
 	GAME_ENGINE->SetHeight(768);
-    GAME_ENGINE->SetFrameRate(50);
+    GAME_ENGINE->SetFrameRate(50);*/
 
-	// Set the keys that the game needs to listen to
-	//tstringstream buffer;
-	//buffer << _T("KLMO");
-	//buffer << (char) VK_LEFT;
-	//buffer << (char) VK_RIGHT;
-	//GAME_ENGINE->SetKeyList(buffer.str());
+	// Loads all libraries at once
+	m_Lua.open_libraries(sol::lib::base);
+
+	//Load & execute the ext. Lua Script
+	m_Lua.script_file("game_breakout.lua");
+
+	// Bind GameEngine class
+	m_Lua.new_usertype<GameEngine>("GameEngine",
+		"SetTitle", &GameEngine::SetTitle,
+		"SetWidth", &GameEngine::SetWidth,
+		"SetHeight", &GameEngine::SetHeight,
+		"SetFrameRate", &GameEngine::SetFrameRate,
+		"SetColor", &GameEngine::SetColor,
+		"FillRect", sol::overload(
+			static_cast<bool(GameEngine::*)(int, int, int, int) const>(&GameEngine::FillRect),
+			static_cast<bool(GameEngine::*)(int, int, int, int, int) const>(&GameEngine::FillRect)
+		)
+	);
+
+	// Bind Game class
+	m_Lua.new_usertype<Game>("Game",
+		//"Initialize", &Game::Initialize,
+		"Start", &Game::Start,
+		//"End", &Game::End,
+		"Paint", &Game::Paint
+		//"Tick", &Game::Tick,
+		//"MouseButtonAction", &Game::MouseButtonAction,
+		//"MouseWheelAction", &Game::MouseWheelAction,
+		//"MouseMove", &Game::MouseMove,
+		//"CheckKeyboard", &Game::CheckKeyboard,
+		//"KeyPressed", &Game::KeyPressed,
+		//"CallAction", &Game::CallAction
+	);
+
+	m_Lua["GAME_ENGINE"] = GAME_ENGINE;
+	m_Lua["GAME"] = this; 
 }
 
 void Game::Start()
 {
 	// Insert code that needs to execute (once) at the start of the game, after the game window is created
+	m_Lua["Start"];
 }
 
 void Game::End()
@@ -54,6 +85,7 @@ void Game::End()
 void Game::Paint(RECT rect) const
 {
 	// Insert paint code 
+	m_Lua["Paint"];
 }
 
 void Game::Tick()

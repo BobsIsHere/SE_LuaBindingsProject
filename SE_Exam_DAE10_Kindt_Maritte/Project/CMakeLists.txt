@@ -38,7 +38,6 @@ list(APPEND SOURCES
 )
 
 list(APPEND LUA_SOURCES 
-            "annotations.lua"
             "game_breakout.lua"
 )
 

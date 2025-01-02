@@ -38,14 +38,3 @@ function GAME_ENGINE:SetColor(r, g, b, a) end
 --- @param bottom numebr
 --- @return boolean
 function GAME_ENGINE:FillRect(left, top, right, bottom) end
-
---- @class GAME
-GAME = {}
-
---- Starts the game
---- @return nil
-function GAME:Start() end
-
---- Paints the game
---- @return nil
-function GAME:Paint() end

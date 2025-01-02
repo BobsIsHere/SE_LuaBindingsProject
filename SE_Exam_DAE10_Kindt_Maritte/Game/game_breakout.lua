@@ -1,9 +1,19 @@
--- Call the C++ function
-result = cpp_function(5, 7)
-print("Result of cpp_function(5, 7):", result)
+--- Setting game engine properties
+function initialize()
+	GAME_ENGINE:SetTitle("Breakout")
+	GAME_ENGINE:SetWidth(800)
+	GAME_ENGINE:SetHeight(600)
+	GAME_ENGINE:SetFrameRate(60)
+end
 
--- Access the C++ variable
-print("Value of C++ variable:", cpp_variable)
+function drawRect()
+	--- Setting the color of rectangle
+	GAME_ENGINE:SetColor(255, 0, 0, 255)
 
--- Set a new Lua variable that C++ will access
-lua_variable = 100
+	--- Draw a rectangle
+	local left = 50
+	local top = 50
+	local right = 200
+	local bottom = 200
+	GAME_ENGINE:FillRect(left, top, right, bottom)
+end

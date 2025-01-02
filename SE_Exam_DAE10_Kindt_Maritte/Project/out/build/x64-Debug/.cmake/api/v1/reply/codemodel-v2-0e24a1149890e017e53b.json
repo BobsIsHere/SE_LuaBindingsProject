@@ -279,7 +279,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "CopyScripts::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-CopyScripts-Debug-a4d366255fde6ccee5ea.json",
+					"jsonFile" : "target-CopyScripts-Debug-4a0605198fcc8d3b2a53.json",
 					"name" : "CopyScripts",
 					"projectIndex" : 0
 				},
@@ -447,7 +447,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "SELua::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-SELua-Debug-535712bc6522aafafe2a.json",
+					"jsonFile" : "target-SELua-Debug-7158bdf6683cef67d992.json",
 					"name" : "SELua",
 					"projectIndex" : 0
 				},

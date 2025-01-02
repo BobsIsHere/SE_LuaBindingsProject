@@ -110,7 +110,7 @@ build SELua.exe: CXX_EXECUTABLE_LINKER__SELua_Debug CMakeFiles\SELua.dir\src\Gam
 # Utility command for CopyScripts
 
 build CMakeFiles\CopyScripts.util: CUSTOM_COMMAND SELua.exe
-  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\GitHubFiles\SE_LuaBindingsProject\SE_Exam_DAE10_Kindt_Maritte\Project\out\build\x64-Debug && "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E copy_if_different C:/GitHubFiles/SE_LuaBindingsProject/SE_Exam_DAE10_Kindt_Maritte/Project/annotations.lua C:/GitHubFiles/SE_LuaBindingsProject/SE_Exam_DAE10_Kindt_Maritte/Project/out/build/x64-Debug/annotations.lua && cd /D C:\GitHubFiles\SE_LuaBindingsProject\SE_Exam_DAE10_Kindt_Maritte\Project\out\build\x64-Debug && "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E copy_if_different C:/GitHubFiles/SE_LuaBindingsProject/SE_Exam_DAE10_Kindt_Maritte/Project/game_breakout.lua C:/GitHubFiles/SE_LuaBindingsProject/SE_Exam_DAE10_Kindt_Maritte/Project/out/build/x64-Debug/game_breakout.lua"
+  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\GitHubFiles\SE_LuaBindingsProject\SE_Exam_DAE10_Kindt_Maritte\Project\out\build\x64-Debug && "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E copy_if_different C:/GitHubFiles/SE_LuaBindingsProject/SE_Exam_DAE10_Kindt_Maritte/Project/game_breakout.lua C:/GitHubFiles/SE_LuaBindingsProject/SE_Exam_DAE10_Kindt_Maritte/Project/out/build/x64-Debug/game_breakout.lua"
   DESC = Running utility command for CopyScripts
   restat = 1
 
