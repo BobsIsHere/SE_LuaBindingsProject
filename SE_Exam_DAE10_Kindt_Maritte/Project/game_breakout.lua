@@ -1,19 +1,27 @@
+print("Lua script loaded")
+
 --- Setting game engine properties
-function Start()
-	GAME_ENGINE:SetTitle("Breakout Lua")
-	GAME_ENGINE:SetWidth(800)
-	GAME_ENGINE:SetHeight(600)
-	GAME_ENGINE:SetFrameRate(60)
+function Initialize(engine)
+	print("Initialize function called")
+
+	engine:SetTitle("Breakout Lua")
+	engine:SetWidth(800)
+	engine:SetHeight(600)
+	engine:SetFrameRate(60)
 end
 
-function Paint()
+function Start(engine)
+	print("Start function called")
+end
+
+function Paint(engine)
 	--- Setting the color of rectangle
-	GAME_ENGINE:SetColor(255, 0, 0, 255)
+	engine:SetColor(255, 0, 0, 255)
 
 	--- Draw a rectangle
 	local left = 50
 	local top = 50
 	local right = 200
 	local bottom = 200
-	GAME_ENGINE:FillRect(left, top, right, bottom)
+	engine:FillRect(left, top, right, bottom)
 end

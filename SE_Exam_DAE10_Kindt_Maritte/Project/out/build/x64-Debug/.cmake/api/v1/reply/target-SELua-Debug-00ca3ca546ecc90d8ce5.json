@@ -20,8 +20,7 @@
 		],
 		"files" : 
 		[
-			"CMakeLists.txt",
-			"out/build/x64-Debug/_deps/sdl-src/CMakeLists.txt"
+			"CMakeLists.txt"
 		],
 		"nodes" : 
 		[
@@ -31,40 +30,25 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 46,
+				"line" : 39,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 47,
+				"line" : 40,
 				"parent" : 0
-			},
-			{
-				"file" : 1
-			},
-			{
-				"command" : 1,
-				"file" : 1,
-				"line" : 3477,
-				"parent" : 3
 			},
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 52,
+				"line" : 44,
 				"parent" : 0
 			},
 			{
 				"command" : 3,
 				"file" : 0,
-				"line" : 48,
-				"parent" : 0
-			},
-			{
-				"command" : 3,
-				"file" : 0,
-				"line" : 49,
+				"line" : 41,
 				"parent" : 0
 			}
 		]
@@ -81,35 +65,19 @@
 			"defines" : 
 			[
 				{
-					"backtrace" : 5,
+					"backtrace" : 3,
 					"define" : "UNICODE"
 				},
 				{
-					"backtrace" : 5,
+					"backtrace" : 3,
 					"define" : "_UNICODE"
 				}
 			],
 			"includes" : 
 			[
 				{
-					"backtrace" : 6,
-					"path" : "C:/GitHubFiles/SE_LuaBindingsProject/SE_Exam_DAE10_Kindt_Maritte/Project/out/build/x64-Debug/_deps/sdl-src/include"
-				},
-				{
-					"backtrace" : 7,
+					"backtrace" : 4,
 					"path" : "C:/GitHubFiles/SE_LuaBindingsProject/SE_Exam_DAE10_Kindt_Maritte/Project/src"
-				},
-				{
-					"backtrace" : 2,
-					"path" : "C:/GitHubFiles/SE_LuaBindingsProject/SE_Exam_DAE10_Kindt_Maritte/Project/out/build/x64-Debug/_deps/sdl-build/include"
-				},
-				{
-					"backtrace" : 2,
-					"path" : "C:/GitHubFiles/SE_LuaBindingsProject/SE_Exam_DAE10_Kindt_Maritte/Project/out/build/x64-Debug/_deps/sdl-build/include/SDL2"
-				},
-				{
-					"backtrace" : 2,
-					"path" : "C:/GitHubFiles/SE_LuaBindingsProject/SE_Exam_DAE10_Kindt_Maritte/Project/out/build/x64-Debug/_deps/sdl-build/include-config-debug/SDL2"
 				},
 				{
 					"backtrace" : 2,
@@ -144,10 +112,6 @@
 		{
 			"backtrace" : 2,
 			"id" : "lua_lib::@2dc84297423e1c3ed672"
-		},
-		{
-			"backtrace" : 2,
-			"id" : "SDL2-static::@fc7b397d5a055aba6d5e"
 		}
 	],
 	"id" : "SELua::@6890427a1f51a3e7e1df",
@@ -165,77 +129,7 @@
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "_deps\\sdl-build\\SDL2-staticd.lib",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 2,
 				"fragment" : "_deps\\lua-build\\lua_libd.lib",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 4,
-				"fragment" : "kernel32.lib",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 4,
-				"fragment" : "user32.lib",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 4,
-				"fragment" : "gdi32.lib",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 4,
-				"fragment" : "winmm.lib",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 4,
-				"fragment" : "imm32.lib",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 4,
-				"fragment" : "ole32.lib",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 4,
-				"fragment" : "oleaut32.lib",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 4,
-				"fragment" : "version.lib",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 4,
-				"fragment" : "uuid.lib",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 4,
-				"fragment" : "advapi32.lib",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 4,
-				"fragment" : "setupapi.lib",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 4,
-				"fragment" : "shell32.lib",
-				"role" : "libraries"
-			},
-			{
-				"backtrace" : 4,
-				"fragment" : "dinput8.lib",
 				"role" : "libraries"
 			},
 			{

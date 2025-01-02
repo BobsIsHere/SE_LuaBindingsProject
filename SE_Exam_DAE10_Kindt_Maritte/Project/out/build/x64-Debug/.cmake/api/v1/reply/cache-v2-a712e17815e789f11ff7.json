@@ -646,22 +646,6 @@
 			"value" : "C:/GitHubFiles/SE_LuaBindingsProject/SE_Exam_DAE10_Kindt_Maritte/Project"
 		},
 		{
-			"name" : "CMAKE_IMPORT_LIBRARY_SUFFIX",
-			"properties" : 
-			[
-				{
-					"name" : "ADVANCED",
-					"value" : "1"
-				},
-				{
-					"name" : "HELPSTRING",
-					"value" : ""
-				}
-			],
-			"type" : "UNINITIALIZED",
-			"value" : ""
-		},
-		{
 			"name" : "CMAKE_INSTALL_BINDIR",
 			"properties" : 
 			[
@@ -1063,7 +1047,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "5"
+			"value" : "4"
 		},
 		{
 			"name" : "CMAKE_PLATFORM_INFO_INITIALIZED",

@@ -22,13 +22,6 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(sol2)
 
-# Fetch SDL2
-FetchContent_Declare(
-    sdl
-    URL https://github.com/libsdl-org/SDL/releases/download/release-2.30.9/SDL2-2.30.9.tar.gz
-)
-FetchContent_MakeAvailable(sdl)
-
 # Gather sources
 list(APPEND SOURCES 
             "src/Game.cpp"
@@ -44,8 +37,7 @@ list(APPEND LUA_SOURCES
 # Executable target
 set(EXE_NAME SELua)
 add_executable(${EXE_NAME} ${SOURCES} ${LUA_SOURCES})
-target_link_libraries(${EXE_NAME} PRIVATE SDL2::SDL2-static lua::lua sol2)
-target_include_directories(${EXE_NAME} PRIVATE ${SDL2_SOURCE_DIR}/include)
+target_link_libraries(${EXE_NAME} PRIVATE lua::lua sol2)
 target_include_directories(${EXE_NAME} PRIVATE src)
 
 # Define Unicode preprocessor definitions

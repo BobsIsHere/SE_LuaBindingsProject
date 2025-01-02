@@ -24,14 +24,7 @@ Game::~Game()
 
 void Game::Initialize()			
 {
-	// Code that needs to execute (once) at the start of the game, before the game window is created
-
-	/*AbstractGame::Initialize();
-	GAME_ENGINE->SetTitle(_T("Game Engine version 8_01 C++"));	
-	
-	GAME_ENGINE->SetWidth(1024);
-	GAME_ENGINE->SetHeight(768);
-    GAME_ENGINE->SetFrameRate(50);*/
+	AbstractGame::Initialize();
 
 	// Loads all libraries at once
 	m_Lua.open_libraries(sol::lib::base);
@@ -54,7 +47,7 @@ void Game::Initialize()
 
 	// Bind Game class
 	m_Lua.new_usertype<Game>("Game",
-		//"Initialize", &Game::Initialize,
+		"Initialize", &Game::Initialize,
 		"Start", &Game::Start,
 		//"End", &Game::End,
 		"Paint", &Game::Paint
@@ -67,14 +60,30 @@ void Game::Initialize()
 		//"CallAction", &Game::CallAction
 	);
 
-	m_Lua["GAME_ENGINE"] = GAME_ENGINE;
 	m_Lua["GAME"] = this; 
+
+	sol::function lua_initialize = m_Lua["Initialize"];
+	if (lua_initialize.valid())
+	{
+		lua_initialize(myGameEngine);
+	}
+	else
+	{
+		std::cerr << "Failed to find Initialize function in Lua script" << std::endl;
+	}
 }
 
 void Game::Start()
 {
-	// Insert code that needs to execute (once) at the start of the game, after the game window is created
-	m_Lua["Start"];
+	sol::function lua_start = m_Lua["Start"];
+	if (lua_start.valid())
+	{
+		lua_start(myGameEngine);
+	}
+	else
+	{
+		std::cerr << "Failed to find Paint function in Lua script" << std::endl;
+	}
 }
 
 void Game::End()
@@ -84,8 +93,16 @@ void Game::End()
 
 void Game::Paint(RECT rect) const
 {
-	// Insert paint code 
-	m_Lua["Paint"];
+	// Call the Lua Paint function and pass the game engine instance
+	sol::function lua_paint = m_Lua["Paint"];
+	if (lua_paint.valid())
+	{
+		lua_paint(myGameEngine);
+	}
+	else
+	{
+		std::cerr << "Failed to find Paint function in Lua script" << std::endl;
+	}
 }
 
 void Game::Tick()

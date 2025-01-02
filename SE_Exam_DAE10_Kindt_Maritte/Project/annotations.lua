@@ -35,17 +35,24 @@ function GAME_ENGINE:SetColor(r, g, b, a) end
 --- @param left number
 --- @param top number
 --- @param right number
---- @param bottom numebr
+--- @param bottom number
 --- @return boolean
 function GAME_ENGINE:FillRect(left, top, right, bottom) end
 
 --- @class GAME
 GAME = {}
 
---- Starts the game
+--- Initialize the game
+--- @param engine GameEngine
 --- @return nil
-function GAME:Start() end
+function GAME:Initialize(engine) end
+
+--- Start the game
+--- @param engine GameEngine
+--- @return nil
+function GAME:Start(engine) end
 
 --- Paints the game
+--- @param engine GameEngine
 --- @return nil
-function GAME:Paint() end
+function GAME:Paint(engine) end

@@ -9,8 +9,7 @@
 					"childIndexes" : 
 					[
 						1,
-						3,
-						4
+						3
 					],
 					"hasInstallRule" : true,
 					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
@@ -23,7 +22,7 @@
 					"targetIndexes" : 
 					[
 						9,
-						33
+						29
 					]
 				},
 				{
@@ -42,7 +41,7 @@
 					"source" : "out/build/x64-Debug/_deps/lua-src",
 					"targetIndexes" : 
 					[
-						34
+						30
 					]
 				},
 				{
@@ -98,26 +97,6 @@
 						27,
 						28
 					]
-				},
-				{
-					"build" : "_deps/sdl-build",
-					"jsonFile" : "directory-_deps.sdl-build-Debug-f5ed369bd38c6a25a82c.json",
-					"minimumCMakeVersion" : 
-					{
-						"string" : "3.4"
-					},
-					"parentIndex" : 0,
-					"projectIndex" : 3,
-					"source" : "out/build/x64-Debug/_deps/sdl-src",
-					"targetIndexes" : 
-					[
-						29,
-						30,
-						31,
-						32,
-						35,
-						36
-					]
 				}
 			],
 			"name" : "Debug",
@@ -127,8 +106,7 @@
 					"childIndexes" : 
 					[
 						1,
-						2,
-						3
+						2
 					],
 					"directoryIndexes" : 
 					[
@@ -138,7 +116,7 @@
 					"targetIndexes" : 
 					[
 						9,
-						33
+						29
 					]
 				},
 				{
@@ -151,7 +129,7 @@
 					"parentIndex" : 0,
 					"targetIndexes" : 
 					[
-						34
+						30
 					]
 				},
 				{
@@ -191,23 +169,6 @@
 						26,
 						27,
 						28
-					]
-				},
-				{
-					"directoryIndexes" : 
-					[
-						4
-					],
-					"name" : "SDL2",
-					"parentIndex" : 0,
-					"targetIndexes" : 
-					[
-						29,
-						30,
-						31,
-						32,
-						35,
-						36
 					]
 				}
 			],
@@ -279,7 +240,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "CopyScripts::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-CopyScripts-Debug-4a0605198fcc8d3b2a53.json",
+					"jsonFile" : "target-CopyScripts-Debug-75134ad532f91bd0aa5b.json",
 					"name" : "CopyScripts",
 					"projectIndex" : 0
 				},
@@ -417,37 +378,9 @@
 					"projectIndex" : 2
 				},
 				{
-					"directoryIndex" : 4,
-					"id" : "SDL2::@fc7b397d5a055aba6d5e",
-					"jsonFile" : "target-SDL2-Debug-9b52704b46e7c5624eca.json",
-					"name" : "SDL2",
-					"projectIndex" : 3
-				},
-				{
-					"directoryIndex" : 4,
-					"id" : "SDL2-static::@fc7b397d5a055aba6d5e",
-					"jsonFile" : "target-SDL2-static-Debug-aba57be08867cd8fae40.json",
-					"name" : "SDL2-static",
-					"projectIndex" : 3
-				},
-				{
-					"directoryIndex" : 4,
-					"id" : "SDL2_test::@fc7b397d5a055aba6d5e",
-					"jsonFile" : "target-SDL2_test-Debug-edd6fc96636230d7fc1c.json",
-					"name" : "SDL2_test",
-					"projectIndex" : 3
-				},
-				{
-					"directoryIndex" : 4,
-					"id" : "SDL2main::@fc7b397d5a055aba6d5e",
-					"jsonFile" : "target-SDL2main-Debug-bc64eca2981695c4c1d7.json",
-					"name" : "SDL2main",
-					"projectIndex" : 3
-				},
-				{
 					"directoryIndex" : 0,
 					"id" : "SELua::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-SELua-Debug-7158bdf6683cef67d992.json",
+					"jsonFile" : "target-SELua-Debug-00ca3ca546ecc90d8ce5.json",
 					"name" : "SELua",
 					"projectIndex" : 0
 				},
@@ -457,20 +390,6 @@
 					"jsonFile" : "target-lua_lib-Debug-6eaa281f4fa8cac794f9.json",
 					"name" : "lua_lib",
 					"projectIndex" : 1
-				},
-				{
-					"directoryIndex" : 4,
-					"id" : "sdl_headers_copy::@fc7b397d5a055aba6d5e",
-					"jsonFile" : "target-sdl_headers_copy-Debug-0d72915cd71ce7387a4a.json",
-					"name" : "sdl_headers_copy",
-					"projectIndex" : 3
-				},
-				{
-					"directoryIndex" : 4,
-					"id" : "uninstall::@fc7b397d5a055aba6d5e",
-					"jsonFile" : "target-uninstall-Debug-9ef335b8b5173b22f114.json",
-					"name" : "uninstall",
-					"projectIndex" : 3
 				}
 			]
 		}
