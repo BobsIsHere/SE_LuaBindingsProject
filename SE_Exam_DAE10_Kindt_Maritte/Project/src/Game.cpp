@@ -32,82 +32,40 @@ void Game::Initialize()
 	//Load & execute the ext. Lua Script
 	m_Lua.script_file("game_breakout.lua");
 
-	// Bind GameEngine class
-	m_Lua.new_usertype<GameEngine>("GameEngine",
-		"SetTitle", &GameEngine::SetTitle,
-		"SetWidth", &GameEngine::SetWidth,
-		"SetHeight", &GameEngine::SetHeight,
-		"SetFrameRate", &GameEngine::SetFrameRate,
-		"SetColor", &GameEngine::SetColor,
-		"FillRect", sol::overload(
-			static_cast<bool(GameEngine::*)(int, int, int, int) const>(&GameEngine::FillRect),
-			static_cast<bool(GameEngine::*)(int, int, int, int, int) const>(&GameEngine::FillRect)
-		)
-	);
+	// Bind GameEngine classes
+	BindGameEngineClasses();
 
 	// Bind Game class
-	m_Lua.new_usertype<Game>("Game",
-		"Initialize", &Game::Initialize,
-		"Start", &Game::Start,
-		//"End", &Game::End,
-		"Paint", &Game::Paint
-		//"Tick", &Game::Tick,
-		//"MouseButtonAction", &Game::MouseButtonAction,
-		//"MouseWheelAction", &Game::MouseWheelAction,
-		//"MouseMove", &Game::MouseMove,
-		//"CheckKeyboard", &Game::CheckKeyboard,
-		//"KeyPressed", &Game::KeyPressed,
-		//"CallAction", &Game::CallAction
-	);
+	BindGameFunctions(); 
 
 	m_Lua["GAME"] = this; 
 
-	sol::function lua_initialize = m_Lua["Initialize"];
-	if (lua_initialize.valid())
-	{
-		lua_initialize(myGameEngine);
-	}
-	else
-	{
-		std::cerr << "Failed to find Initialize function in Lua script" << std::endl;
-	}
+	sol::function luaInitialize = m_Lua["Initialize"];
+	luaInitialize();
 }
 
 void Game::Start()
 {
-	sol::function lua_start = m_Lua["Start"];
-	if (lua_start.valid())
-	{
-		lua_start(myGameEngine);
-	}
-	else
-	{
-		std::cerr << "Failed to find Paint function in Lua script" << std::endl;
-	}
+	sol::function luaStart = m_Lua["Start"];
+	luaStart();
 }
 
 void Game::End()
 {
-	// Insert code that needs to execute when the game ends
+	sol::function luaEnd = m_Lua["End"];
+	luaEnd();
 }
 
 void Game::Paint(RECT rect) const
 {
-	// Call the Lua Paint function and pass the game engine instance
-	sol::function lua_paint = m_Lua["Paint"];
-	if (lua_paint.valid())
-	{
-		lua_paint(myGameEngine);
-	}
-	else
-	{
-		std::cerr << "Failed to find Paint function in Lua script" << std::endl;
-	}
+	sol::function luaPaint = m_Lua["Paint"];
+	luaPaint(); 
 }
 
 void Game::Tick()
 {
-	// Insert non-paint code that needs to execute each tick 
+	sol::function luaTick = m_Lua["Tick"];
+	luaTick(); 
 }
 
 void Game::MouseButtonAction(bool isLeft, bool isDown, int x, int y, WPARAM wParam)
@@ -126,11 +84,15 @@ void Game::MouseButtonAction(bool isLeft, bool isDown, int x, int y, WPARAM wPar
 		}
 	}
 	*/
+
+	sol::function luaMouseButtonAction = m_Lua["MouseButtonAction"];
+	luaMouseButtonAction(isLeft, isDown, x, y);
 }
 
 void Game::MouseWheelAction(int x, int y, int distance, WPARAM wParam)
 {	
-	// Insert code for a mouse wheel action
+	sol::function luaMouseWheelAction = m_Lua["MouseWheelAction"];
+	luaMouseWheelAction(x, y, distance);
 }
 
 void Game::MouseMove(int x, int y, WPARAM wParam)
@@ -146,6 +108,9 @@ void Game::MouseMove(int x, int y, WPARAM wParam)
 		}
 	}
 	*/
+
+	sol::function luaMouseMove = m_Lua["MouseMove"];
+	luaMouseMove(x, y); 
 }
 
 void Game::CheckKeyboard()
@@ -159,6 +124,9 @@ void Game::CheckKeyboard()
 	if (GAME_ENGINE->IsKeyDown(_T('M'))) xIcon += xSpeed;
 	if (GAME_ENGINE->IsKeyDown(_T('O'))) yIcon -= ySpeed;
 	*/
+
+	sol::function luaCheckKeyboard = m_Lua["CheckKeyboard"];
+	luaCheckKeyboard();  
 }
 
 void Game::KeyPressed(TCHAR key)
@@ -188,9 +156,112 @@ void Game::KeyPressed(TCHAR key)
 		GAME_ENGINE->MessageBox("Escape menu.");
 	}
 	*/
+	GAME_ENGINE->SetKeyList(_T("WASD"));
+
+	std::string keyStr{};
+
+	// Single character + null terminator
+	char buffer[2];
+	// Convert wchar_t to char
+	wcstombs(buffer, &key, 1);
+	// Create string from character
+	keyStr = std::string(buffer, 1);
+
+	sol::function luaKeyPressed = m_Lua["KeyPressed"];
+	luaKeyPressed(keyStr);
 }
 
 void Game::CallAction(Caller* callerPtr)
 {
 	// Insert the code that needs to execute when a Caller (= Button, TextBox, Timer, Audio) executes an action
+	sol::function luaCallAction = m_Lua["CallAction"];
+	luaCallAction(callerPtr);
+}
+
+void Game::BindGameEngineClasses()
+{
+	m_Lua.new_usertype<GameEngine>("GameEngine",
+		"SetTitle", &GameEngine::SetTitle,
+		"SetWidth", &GameEngine::SetWidth,
+		"SetHeight", &GameEngine::SetHeight,
+		"SetFrameRate", &GameEngine::SetFrameRate,
+		"SetColor", &GameEngine::SetColor,
+		"FillRect", sol::overload(
+			static_cast<bool(GameEngine::*)(int, int, int, int) const>(&GameEngine::FillRect),
+			static_cast<bool(GameEngine::*)(int, int, int, int, int) const>(&GameEngine::FillRect)
+		),
+		"GAME_ENGINE", sol::readonly_property([]() {return GAME_ENGINE; })
+	);
+
+	m_Lua.new_usertype<Callable>("Callable",
+		"CallAction", &Callable::CallAction
+	);
+
+	m_Lua.new_usertype<Caller>("Caller",
+		// Methods
+		"AddActionListener", &Caller::AddActionListener,
+		"RemoveActionListener", &Caller::RemoveActionListener
+	);
+
+	m_Lua.new_usertype<Button>("Button",
+		// Constructors
+		sol::constructors<Button(const tstring&), Button()>(),
+		// specify inheritance
+		sol::base_classes, sol::bases<Caller>(),
+
+		// Methods
+		"SetBounds", &Button::SetBounds, 
+		"SetText", [this](Button& btn, const std::string& text) 
+		{
+			// Convert to tstring
+			btn.SetText(ToTString(text));
+		},
+		"SetFont", [this](Button& btn, const std::string& fontName, bool bold, bool italic, bool underline, int size) 
+		{
+			// Convert to tstring
+			btn.SetFont(ToTString(fontName), bold, italic, underline, size);
+		},
+		"SetEnabled", &Button::SetEnabled,
+		"Show", &Button::Show,
+		"Hide", &Button::Hide,
+
+		// Read-Only properties
+		"GetBounds", &Button::GetBounds,
+		"GetText", [this](Button& btn) -> std::string 
+		{
+			// Convert to std::string
+			tstring text = btn.GetText();
+			return ToStdString(text);  
+		},
+		"GetType", &Button::GetType
+	);
+
+	m_Lua["GAME_ENGINE"] = GAME_ENGINE;
+}
+
+void Game::BindGameFunctions()
+{
+	m_Lua.new_usertype<Game>("Game",
+		"Initialize", &Game::Initialize,
+		"Start", &Game::Start,
+		"End", &Game::End,
+		"Paint", &Game::Paint,
+		"Tick", &Game::Tick,
+		"MouseButtonAction", &Game::MouseButtonAction,
+		"MouseWheelAction", &Game::MouseWheelAction,
+		"MouseMove", &Game::MouseMove,
+		"CheckKeyboard", &Game::CheckKeyboard,
+		"KeyPressed", &Game::KeyPressed,
+		"CallAction", &Game::CallAction
+	);
+}
+
+tstring Game::ToTString(const std::string& string)
+{
+	return tstring(string.begin(), string.end());
+}
+
+std::string Game::ToStdString(const tstring& string)
+{
+	return std::string(string.begin(), string.end());
 }

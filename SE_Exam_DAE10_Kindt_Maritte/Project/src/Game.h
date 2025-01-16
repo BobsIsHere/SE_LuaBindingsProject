@@ -51,6 +51,15 @@ public:
 	void CallAction(Caller* callerPtr) override;
 
 private:
+	//---------------------------
+	// General Member Functions
+	//---------------------------
+	void BindGameEngineClasses();
+	void BindGameFunctions(); 
+
+	tstring ToTString(const std::string& string);
+	std::string ToStdString(const tstring& string);
+	
 	// -------------------------
 	// Datamembers
 	// -------------------------

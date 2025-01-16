@@ -22,7 +22,6 @@ GameEngine* GAME_ENGINE{ &myGameEngine };
 //-----------------------------------------------------------------
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
 {
-	if (GAME_ENGINE == nullptr) return FALSE;			// no engine, no game
 	GAME_ENGINE->SetGame(new Game());			// any class that implements AbstractGame
 
 	return GAME_ENGINE->Run(hInstance, nCmdShow);		// here we go
