@@ -73,6 +73,13 @@ function Callable:CallAction(caller) end
 --- Represents a UI Button that can be interacted with.
 Button = {}
 
+--- Add Action Listener
+--- @param target Callable
+--- @return boolean
+function Button:AddActionListener(target) 
+    target:AddActionListener(self)
+end
+
 --- Button Constructor
 --- @param text string
 --- @return Button
