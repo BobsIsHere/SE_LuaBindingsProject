@@ -184,20 +184,37 @@ void Game::CallAction(Caller* callerPtr)
 void Game::BindGameEngineClasses()
 {
 	m_Lua.new_usertype<GameEngine>("GameEngine",
-		// Methods
+		// General Member Functions
 		"SetTitle", &GameEngine::SetTitle,
 		"SetWidth", &GameEngine::SetWidth,
 		"SetHeight", &GameEngine::SetHeight,
 		"SetFrameRate", &GameEngine::SetFrameRate,
 		"IsKeyDown", &GameEngine::IsKeyDown,
+
+		// Draw Functions
 		"SetColor", &GameEngine::SetColor,
 		"FillRect", sol::overload(
 			static_cast<bool(GameEngine::*)(int, int, int, int) const>(&GameEngine::FillRect),
 			static_cast<bool(GameEngine::*)(int, int, int, int, int) const>(&GameEngine::FillRect)
 		),
+		"FillOval", sol::overload(
+			static_cast<bool(GameEngine::*)(int, int, int, int) const>(&GameEngine::FillOval),
+			static_cast<bool(GameEngine::*)(int, int, int, int, int) const>(&GameEngine::FillOval)
+		),
+		"DrawString", sol::overload(
+			static_cast<int(GameEngine::*)(const tstring&, int, int) const>(&GameEngine::DrawString),
+			static_cast<int(GameEngine::*)(const tstring&, int, int, int, int) const>(&GameEngine::DrawString)
+		),
+		"DrawBitmap", sol::overload(
+			static_cast<bool(GameEngine::*)(const Bitmap*, int, int) const>(&GameEngine::DrawBitmap),
+			static_cast<bool(GameEngine::*)(const Bitmap*, int, int, RECT) const>(&GameEngine::DrawBitmap)
+		),
+
+		// Accessor Member Functions
 		"GetWidth", &GameEngine::GetWidth,
 		"GetHeight", &GameEngine::GetHeight,
 
+		// Game Engine Variable
 		"GAME_ENGINE", sol::readonly_property([]() { return GAME_ENGINE; })
 	);
 

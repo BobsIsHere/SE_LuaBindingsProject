@@ -1,10 +1,12 @@
 ---@meta
 
---- #################
+--- -------------------------------------
 --- Game Engine Class
---- #################
+--- -------------------------------------
 ---@class GameEngine
 GAME_ENGINE = {}
+
+--- General Member Functions
 
 --- Sets Window Title
 --- @param title string
@@ -31,6 +33,8 @@ function GAME_ENGINE:SetFrameRate(frameRate) end
 --- @return boolean
 function GAME_ENGINE:IsKeyDown(key) end
 
+--- Draw Functions
+
 --- Sets Color
 --- @param color DWORD
 --- @return nil
@@ -44,22 +48,66 @@ function GAME_ENGINE:SetColor(color) end
 --- @return boolean
 function GAME_ENGINE:FillRect(left, top, right, bottom) end
 
+--- @param left integer
+--- @param top integer
+--- @param right integer
+--- @param bottom integer
+--- @param opacity integer
+--- @return boolean
+function GAME_ENGINE:FillRect(left, top, right, bottom, opacity) end
+
+--- Makes Filled Oval
+--- @param left integer
+--- @param top integer
+--- @param right integer
+--- @param bottom integer
+--- @return boolean
+function GAME_ENGINE:FillOval(left, top, right, bottom) end
+
+--- @param left integer
+--- @param top integer
+--- @param right integer
+--- @param bottom integer
+--- @param opacity integer
+--- @return boolean
+function GAME_ENGINE:FillOval(left, top, right, bottom, opacity) end
+
+--- Draw String
+--- @param text string
+--- @param left integer
+--- @param top integer
+--- @return integer
+function GAME_ENGINE:DrawString(text, left, top) end
+
+--- @param text string
+--- @param left integer
+--- @param top integer
+--- @param right integer
+--- @param bottom integer
+--- @return integer
+function GAME_ENGINE:DrawString(text, left, top, right, bottom) end
+
+--- Draw Bitmap
+
+
+--- Accessor Member Functions
+
 --- Get Screen Width
 --- @return integer
 function GAME_ENGINE:GetWidth() end
 
 --- Get Screen Height
 --- @return integer
-    function GAME_ENGINE:GetHeight() end
+function GAME_ENGINE:GetHeight() end
 
 --- Predefined Game Engine
 --- @type GameEngine
 GAME_ENGINE.GAME_ENGINE = GAME_ENGINE
 
 
---- ############
+--- -------------------------------------
 --- Caller Class
---- ############
+--- -------------------------------------
 --- @class Caller
 
 --- Add Action Listener
@@ -72,9 +120,9 @@ function Caller:AddActionListener(target) end
 --- @return boolean
 function Caller:RemoveActionListener(target) end
 
---- ##############
+--- -------------------------------------
 --- Callable Class
---- ##############
+--- -------------------------------------
 --- @class Callable
 
 --- Call Action
@@ -82,9 +130,9 @@ function Caller:RemoveActionListener(target) end
 --- @return nil
 function Callable:CallAction(caller) end
 
---- ############
+--- -------------------------------------
 --- Button Class
---- ############
+--- -------------------------------------
 --- @class Button : Caller
 --- Represents a UI Button that can be interacted with.
 Button = {}
@@ -161,9 +209,9 @@ function Button:GetText() end
 function Button:GetType() end
 
 
---- ##########
+--- -------------------------------------
 --- Game Class
---- ##########
+--- -------------------------------------
 --- @class GAME
 GAME = {}
 

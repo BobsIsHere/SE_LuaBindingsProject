@@ -78,7 +78,7 @@ end
 --- Draw Ball
 function Ball:Draw()
 	GAME_ENGINE:SetColor(tonumber("FFFFFF", 16))
-	GAME_ENGINE:FillRect(self.x, self.y, self.x +  self.radius, self.y +  self.radius)
+	GAME_ENGINE:FillOval(self.x, self.y, self.x +  self.radius, self.y +  self.radius)
 end
 
 --- Check Window collision
@@ -154,22 +154,27 @@ end
 --- Game Class
 --- -------------------------------------
 
+--- Initialize Variables
+local score = 0
+
+local player = Player:new(350, 550, 100, 20)
+local ball = Ball:new(400, 300, 10, 4, -4)
+
+local blocks = {}
+
 -- Generate 3 rows of blocks, with 10 blocks
 local rows = 6
 local cols = 9
 local blockWidth = 60
 local blockHeight = 20
 local blockSpacing = 10
+local windowSpacing = 50
 
---- Initialize Variables
-local player = Player:new(350, 550, 100, 20)
-local ball = Ball:new(400, 300, 10, 4, -4)
-local blocks = {}
 for row = 1, rows do
 	for col = 1, cols do
 		-- Caluclate position of block
 		local x = (col - 1) * (blockWidth + blockSpacing)
-		local y = (row - 1) * (blockHeight + blockSpacing) + 10
+		local y = (row - 1) * (blockHeight + blockSpacing) + windowSpacing
 
 		-- Create new block & insert in table
 		local block = Block.new(x, y, blockWidth, blockHeight)
@@ -186,14 +191,7 @@ function Initialize()
 end
 
 function Start()
-	--local myButton = Button:new("Click Me!")
 
-	--myButton:SetBounds(100,100,300,150)
-	--myButton:SetText("Click Me!")
-	--myButton:SetFont("Arial", false, false, false, 24)
-	--myButton:SetEnabled(true)
-	--myButton:AddActionListener(self)
-	--myButton:Show()
 end
 
 function End()
@@ -211,6 +209,10 @@ function Paint()
 	for _, block in ipairs(blocks) do
 		block:Draw()
 	end
+
+	-- Draw Score
+	GAME_ENGINE:SetColor(tonumber("FFFFFF", 16))
+	GAME_ENGINE:DrawString("Score: " .. score, 10, 10)
 end
 
 function Tick()
@@ -226,6 +228,8 @@ function Tick()
 			if block:CheckBallCollision(ball) then
 				-- Remove the block from the table after collision
 				table.remove(blocks, i)
+				-- Increase Score
+				score = score + 10
 			end
 		end
 	end
