@@ -48,6 +48,10 @@ function GAME_ENGINE:FillRect(left, top, right, bottom) end
 --- @return integer
 function GAME_ENGINE:GetWidth() end
 
+--- Get Screen Height
+--- @return integer
+    function GAME_ENGINE:GetHeight() end
+
 --- Predefined Game Engine
 --- @type GameEngine
 GAME_ENGINE.GAME_ENGINE = GAME_ENGINE

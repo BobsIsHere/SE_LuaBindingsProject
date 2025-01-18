@@ -2,6 +2,13 @@
 local Player = {}
 Player.__index = Player
 
+local Ball = {}
+Ball.__index = Ball
+
+--- -------------------------------------
+--- Player Class
+--- -------------------------------------
+
 --- Player Constructor
 --- @param x integer
 --- @param y integer
@@ -34,12 +41,77 @@ end
 
 --- Player Draw
 function Player:Draw()
-    GAME_ENGINE:SetColor(tonumber("FFFFFF", 16)) 
+    GAME_ENGINE:SetColor(tonumber("10085C", 16)) 
     GAME_ENGINE:FillRect(self.x, self.y, self.x + self.width, self.y + self.height)
 end
 
+--- -------------------------------------
+--- Ball Class
+--- -------------------------------------
+
+--- Ball Constructor
+--- @param x integer
+--- @param y number
+--- @param radius integer
+--- @param speedX integer
+--- @param speedY integer
+function Ball:new(x,y,radius,speedX,speedY)
+	local self = setmetatable({}, Ball)
+	self.x = x
+	self.y = y
+	self.radius = radius
+	self.speedX = speedX
+	self.speedY = speedY
+
+	return self
+end
+
+--- Move Ball in Window
+function Ball:Move()
+	self.x = self.x + self.speedX
+	self.y = self.y + self.speedY
+end
+
+--- Draw Ball
+function Ball:Draw()
+	GAME_ENGINE:SetColor(tonumber("FFFFFF", 16))
+	GAME_ENGINE:FillRect(self.x, self.y, self.x +  self.radius, self.y +  self.radius)
+end
+
+--- Check Window collision
+function Ball:CheckWindowCollision()
+	-- Ball collision with left & right
+	if self.x - self.radius < 0 then
+		self.speedX = -self.speedX
+	elseif self.x + self.radius > GAME_ENGINE:GetWidth() then
+		self.speedX = -self.speedX
+	end
+
+	-- Ball collisions with top & bottom
+	if self.y - self.radius < 0 then
+		self.speedY = -self.speedY
+	elseif self.y + self.radius > GAME_ENGINE:GetHeight() then
+		self.speedY = -self.speedY
+	end
+end
+
+--- Check player Collision
+--- @param player Player
+function Ball:CheckPlayerCollision(player)
+	if self.x + self.radius > player.x and self.x - self.radius < player.x + player.width then
+		if self.y + self.radius > player.y and self.y - self.radius < player.y + player.height then
+			self.speedY = -self.speedY
+		end
+	end
+end
+
+--- -------------------------------------
+--- Game Class
+--- -------------------------------------
+
 --- Initialize Variables
 local player = Player:new(350, 550, 100, 20)
+local ball = Ball:new(400, 300, 10, 4, -4)
 
 --- Setting game engine properties
 function Initialize()
@@ -66,10 +138,14 @@ end
 
 function Paint()
 	player:Draw()
+	ball:Draw()
 end
 
 function Tick()
-	
+	ball:Move()
+
+	ball:CheckWindowCollision()
+	ball:CheckPlayerCollision(player)
 end
 
 function MouseButtonAction(isLeft, isDown, x, y)

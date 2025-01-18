@@ -194,10 +194,10 @@ void Game::BindGameEngineClasses()
 			static_cast<bool(GameEngine::*)(int, int, int, int) const>(&GameEngine::FillRect),
 			static_cast<bool(GameEngine::*)(int, int, int, int, int) const>(&GameEngine::FillRect)
 		),
-		"GAME_ENGINE", sol::readonly_property([]() {return GAME_ENGINE; }),
+		"GetWidth", &GameEngine::GetWidth,
+		"GetHeight", &GameEngine::GetHeight,
 
-		//Read-Only properties
-		"GetWidth", &GameEngine::GetWidth
+		"GAME_ENGINE", sol::readonly_property([]() {return GAME_ENGINE; })
 	);
 
 	m_Lua.new_usertype<Callable>("Callable",
