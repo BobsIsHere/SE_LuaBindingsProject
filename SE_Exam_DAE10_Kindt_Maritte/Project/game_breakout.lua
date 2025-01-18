@@ -103,6 +103,10 @@ end
 function Ball:CheckPlayerCollision(player)
 	if self.x + self.radius > player.x and self.x - self.radius < player.x + player.width then
 		if self.y + self.radius > player.y and self.y - self.radius < player.y + player.height then
+			-- Calculate angle
+			local angle = (((self.x - player.x) / player.width) - 0.5) * math.pi
+
+			self.speedX = self.speedX * math.cos(angle)
 			self.speedY = -self.speedY
 		end
 	end
@@ -135,6 +139,7 @@ end
 
 --- Check Collision with Ball
 --- @param ball Ball
+--- @param player Player
 --- @return boolean
 function Block:CheckBallCollision(ball)
 	-- Check for left & right collision
@@ -142,7 +147,6 @@ function Block:CheckBallCollision(ball)
 		-- Check for top & bottom collision
 		if ball.y + ball.radius > self.y and ball.y - ball.radius < self.y + self.height then
 			ball.speedY = -ball.speedY
-
 			return true
 		end
 	end
@@ -157,8 +161,8 @@ end
 --- Initialize Variables
 local score = 0
 
-local player = Player:new(350, 550, 100, 20)
-local ball = Ball:new(400, 300, 10, 4, -4)
+local player = Player:new(280, 550, 100, 20)
+local ball = Ball:new(330, 540, 10, 4, -4)
 
 local blocks = {}
 

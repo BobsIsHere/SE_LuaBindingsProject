@@ -28,6 +28,7 @@ void Game::Initialize()
 
 	// Loads all libraries at once
 	m_Lua.open_libraries(sol::lib::base);
+	m_Lua.open_libraries(sol::lib::math);
 	m_Lua.open_libraries(sol::lib::table);
 
 	//Load & execute the ext. Lua Script
