@@ -58,6 +58,9 @@ void Game::End()
 
 void Game::Paint(RECT rect) const
 {
+	// Add To Lua Bindings
+	GAME_ENGINE->FillWindowRect(0x000000);
+
 	sol::function luaPaint = m_Lua["Paint"];
 	luaPaint(); 
 }
@@ -156,7 +159,6 @@ void Game::KeyPressed(TCHAR key)
 		GAME_ENGINE->MessageBox("Escape menu.");
 	}
 	*/
-	GAME_ENGINE->SetKeyList(_T("WASD"));
 
 	std::string keyStr{};
 
@@ -181,16 +183,21 @@ void Game::CallAction(Caller* callerPtr)
 void Game::BindGameEngineClasses()
 {
 	m_Lua.new_usertype<GameEngine>("GameEngine",
+		// Methods
 		"SetTitle", &GameEngine::SetTitle,
 		"SetWidth", &GameEngine::SetWidth,
 		"SetHeight", &GameEngine::SetHeight,
 		"SetFrameRate", &GameEngine::SetFrameRate,
+		"IsKeyDown", &GameEngine::IsKeyDown,
 		"SetColor", &GameEngine::SetColor,
 		"FillRect", sol::overload(
 			static_cast<bool(GameEngine::*)(int, int, int, int) const>(&GameEngine::FillRect),
 			static_cast<bool(GameEngine::*)(int, int, int, int, int) const>(&GameEngine::FillRect)
 		),
-		"GAME_ENGINE", sol::readonly_property([]() {return GAME_ENGINE; })
+		"GAME_ENGINE", sol::readonly_property([]() {return GAME_ENGINE; }),
+
+		//Read-Only properties
+		"GetWidth", &GameEngine::GetWidth
 	);
 
 	m_Lua.new_usertype<Callable>("Callable",
@@ -226,14 +233,14 @@ void Game::BindGameEngineClasses()
 		"Hide", &Button::Hide,
 
 		// Read-Only properties
-		"GetBounds", &Button::GetBounds,
-		"GetText", [this](Button& btn) -> std::string 
+		"GetBounds", sol::readonly_property(&Button::GetBounds),
+		"GetText", sol::readonly_property([this](Button& btn) -> std::string
 		{
 			// Convert to std::string
 			tstring text = btn.GetText();
 			return ToStdString(text);  
-		},
-		"GetType", &Button::GetType
+		}),
+		"GetType", sol::readonly_property(&Button::GetType)
 	);
 
 	m_Lua["GAME_ENGINE"] = GAME_ENGINE;

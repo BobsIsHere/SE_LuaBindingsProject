@@ -1,6 +1,8 @@
 ---@meta
 
+--- #################
 --- Game Engine Class
+--- #################
 ---@class GameEngine
 GAME_ENGINE = {}
 
@@ -10,42 +12,50 @@ GAME_ENGINE = {}
 function GAME_ENGINE:SetTitle(title) end
 
 --- Sets Window Width
---- @param width number
+--- @param width integer
 --- @return nil
 function GAME_ENGINE:SetWidth(width) end
 
 --- Sets Window Height
---- @param height number
+--- @param height integer
 --- @return nil
 function GAME_ENGINE:SetHeight(height) end
 
 --- Sets Window Frame Rate
---- @param frameRate number
+--- @param frameRate integer
 --- @return nil
 function GAME_ENGINE:SetFrameRate(frameRate) end
 
+--- Check What Key is Pressed
+--- @param key integer
+--- @return boolean
+function GAME_ENGINE:IsKeyDown(key) end
+
 --- Sets Color
---- @param r number
---- @param g number
---- @param b number
---- @param a number
+--- @param color DWORD
 --- @return nil
-function GAME_ENGINE:SetColor(r, g, b, a) end
+function GAME_ENGINE:SetColor(color) end
 
 --- Makes Filled Rectangle
---- @param left number
---- @param top number
---- @param right number
---- @param bottom number
+--- @param left integer
+--- @param top integer
+--- @param right integer
+--- @param bottom integer
 --- @return boolean
 function GAME_ENGINE:FillRect(left, top, right, bottom) end
+
+--- Get Screen Width
+--- @return integer
+function GAME_ENGINE:GetWidth() end
 
 --- Predefined Game Engine
 --- @type GameEngine
 GAME_ENGINE.GAME_ENGINE = GAME_ENGINE
 
 
+--- ############
 --- Caller Class
+--- ############
 --- @class Caller
 
 --- Add Action Listener
@@ -58,8 +68,9 @@ function Caller:AddActionListener(target) end
 --- @return boolean
 function Caller:RemoveActionListener(target) end
 
-
+--- ##############
 --- Callable Class
+--- ##############
 --- @class Callable
 
 --- Call Action
@@ -67,8 +78,9 @@ function Caller:RemoveActionListener(target) end
 --- @return nil
 function Callable:CallAction(caller) end
 
-
+--- ############
 --- Button Class
+--- ############
 --- @class Button : Caller
 --- Represents a UI Button that can be interacted with.
 Button = {}
@@ -98,10 +110,10 @@ function Button:new()
 end
 
 --- Set Bounds
---- @param left number
---- @param top number
---- @param right number
---- @param bottom number
+--- @param left integer
+--- @param top integer
+--- @param right integer
+--- @param bottom integer
 --- @return nil
 function Button:SetBounds(left, top, right, bottom) end
 
@@ -112,15 +124,15 @@ function Button:SetText(text) end
 
 --- Set Fond
 --- @param font_name string
---- @param bold bool
---- @param italic bool
---- @param underline bool
---- @param size int
+--- @param bold boolean
+--- @param italic boolean
+--- @param underline boolean
+--- @param size integer
 --- @return nil
 function Button:SetFont(font_name, bold, italic, underline, size) end
 
 --- Set Enabled
---- @param enable bool
+--- @param enable boolean
 --- @return nil
 function Button:SetEnabled(enable) end
 
@@ -145,7 +157,9 @@ function Button:GetText() end
 function Button:GetType() end
 
 
+--- ##########
 --- Game Class
+--- ##########
 --- @class GAME
 GAME = {}
 
@@ -172,21 +186,21 @@ function GAME:Tick() end
 --- Mouse Button Action
 --- @param isLeft boolean
 --- @param isDown boolean
---- @param x int
---- @param y int
+--- @param x integer
+--- @param y integer
 --- @return nil
 function GAME:MouseButtonAction(isLeft, isDown, x, y) end
 
 --- Mouse Wheel Action
---- @param x int
---- @param y int
---- @param distance int
+--- @param x integer
+--- @param y integer
+--- @param distance integer
 --- @return nil
 function GAME:MouseWheelAction(x, y, distance) end
 
 --- Mouse Move
---- @param x int
---- @param y int
+--- @param x integer
+--- @param y integer
 --- @return nil
 function GAME:MouseMove(x, y) end
 
