@@ -28,6 +28,7 @@ void Game::Initialize()
 
 	// Loads all libraries at once
 	m_Lua.open_libraries(sol::lib::base);
+	m_Lua.open_libraries(sol::lib::table);
 
 	//Load & execute the ext. Lua Script
 	m_Lua.script_file("game_breakout.lua");
@@ -197,7 +198,7 @@ void Game::BindGameEngineClasses()
 		"GetWidth", &GameEngine::GetWidth,
 		"GetHeight", &GameEngine::GetHeight,
 
-		"GAME_ENGINE", sol::readonly_property([]() {return GAME_ENGINE; })
+		"GAME_ENGINE", sol::readonly_property([]() { return GAME_ENGINE; })
 	);
 
 	m_Lua.new_usertype<Callable>("Callable",

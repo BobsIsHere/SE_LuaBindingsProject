@@ -5,6 +5,9 @@ Player.__index = Player
 local Ball = {}
 Ball.__index = Ball
 
+local Block = {}
+Block.__index = Block
+
 --- -------------------------------------
 --- Player Class
 --- -------------------------------------
@@ -41,7 +44,7 @@ end
 
 --- Player Draw
 function Player:Draw()
-    GAME_ENGINE:SetColor(tonumber("10085C", 16)) 
+    GAME_ENGINE:SetColor(tonumber("575757", 16)) 
     GAME_ENGINE:FillRect(self.x, self.y, self.x + self.width, self.y + self.height)
 end
 
@@ -51,7 +54,7 @@ end
 
 --- Ball Constructor
 --- @param x integer
---- @param y number
+--- @param y integer
 --- @param radius integer
 --- @param speedX integer
 --- @param speedY integer
@@ -106,17 +109,78 @@ function Ball:CheckPlayerCollision(player)
 end
 
 --- -------------------------------------
+--- Block Class
+--- -------------------------------------
+
+--- Block Constructor
+--- @param x integer
+--- @param y integer
+--- @param width integer
+--- @param height integer
+function Block.new(x,y,width,height)
+	local self = setmetatable({}, Block)
+	self.x = x
+	self.y = y
+	self.width = width
+	self.height = height
+
+	return self
+end
+
+--- Draw Block
+function Block:Draw()
+	GAME_ENGINE:SetColor(tonumber("BE030C", 16))
+	GAME_ENGINE:FillRect(self.x, self.y, self.x + self.width, self.y + self.height)
+end
+
+--- Check Collision with Ball
+--- @param ball Ball
+--- @return boolean
+function Block:CheckBallCollision(ball)
+	-- Check for left & right collision
+	if ball.x + ball.radius > self.x and ball.x - ball.radius < self.x + self.width then
+		-- Check for top & bottom collision
+		if ball.y + ball.radius > self.y and ball.y - ball.radius < self.y + self.height then
+			ball.speedY = -ball.speedY
+
+			return true
+		end
+	end
+
+	return false
+end
+
+--- -------------------------------------
 --- Game Class
 --- -------------------------------------
+
+-- Generate 3 rows of blocks, with 10 blocks
+local rows = 6
+local cols = 9
+local blockWidth = 60
+local blockHeight = 20
+local blockSpacing = 10
 
 --- Initialize Variables
 local player = Player:new(350, 550, 100, 20)
 local ball = Ball:new(400, 300, 10, 4, -4)
+local blocks = {}
+for row = 1, rows do
+	for col = 1, cols do
+		-- Caluclate position of block
+		local x = (col - 1) * (blockWidth + blockSpacing)
+		local y = (row - 1) * (blockHeight + blockSpacing) + 10
 
---- Setting game engine properties
+		-- Create new block & insert in table
+		local block = Block.new(x, y, blockWidth, blockHeight)
+		table.insert(blocks,block)
+	end
+end
+
+--- Game Engine Properties
 function Initialize()
 	GAME_ENGINE:SetTitle("Breakout Lua")
-	GAME_ENGINE:SetWidth(800)
+	GAME_ENGINE:SetWidth(620)
 	GAME_ENGINE:SetHeight(600)
 	GAME_ENGINE:SetFrameRate(60)
 end
@@ -137,8 +201,16 @@ function End()
 end
 
 function Paint()
+	-- Draw Player
 	player:Draw()
+
+	-- Draw Ball
 	ball:Draw()
+
+	-- Draw Blocks
+	for _, block in ipairs(blocks) do
+		block:Draw()
+	end
 end
 
 function Tick()
@@ -146,6 +218,17 @@ function Tick()
 
 	ball:CheckWindowCollision()
 	ball:CheckPlayerCollision(player)
+
+	for i = #blocks, 1, -1 do
+		local block = blocks[i]
+
+		if block then
+			if block:CheckBallCollision(ball) then
+				-- Remove the block from the table after collision
+				table.remove(blocks, i)
+			end
+		end
+	end
 end
 
 function MouseButtonAction(isLeft, isDown, x, y)
