@@ -182,7 +182,7 @@ local is_menu = true
 
 local play_button = {}
 
-local menu_photo = {}
+local menu_bit_map = {}
 
 local player = Player:new(280, 550, 100, 20)
 local ball = Ball:new(330, 540, 10, 3,1, -1)
@@ -228,6 +228,8 @@ function Start()
 
 	play_button = Button.new("Play Game")
 
+	menu_bit_map = Bitmap.new("resources/BreakOutMenu.png", true)
+
 	-- Set up Audio
 	game_audio:SetVolume(50)
 	game_audio:SetRepeat(true)
@@ -237,7 +239,7 @@ function Start()
 	hit_audio:SetRepeat(false)
 
 	-- Set up Play Button
-	play_button:SetBounds(160, 200, 460, 250)
+	play_button:SetBounds(160, 400, 460, 450)
 	play_button:AddActionListener(callable_this_ptr)
 	play_button:SetFont("Arial", true, false, false, 45)
 	play_button:Show()
@@ -252,6 +254,7 @@ function Paint()
 	if is_menu then
 		GAME_ENGINE:SetColor(tonumber("000000", 16))
 		GAME_ENGINE:FillRect(0, 0, GAME_ENGINE:GetWidth(), GAME_ENGINE:GetHeight())
+		GAME_ENGINE:DrawBitmap(menu_bit_map, 175, 10)
 	else
 		-- Draw Player
 		player:Draw()

@@ -98,7 +98,10 @@ function GAME_ENGINE:DrawString(text, left, top) end
 function GAME_ENGINE:DrawString(text, left, top, right, bottom) end
 
 --- Draw Bitmap
-
+--- @param bit_map Bitmap
+--- @param left integer
+--- @param top integer
+function GAME_ENGINE:DrawBitmap(bit_map, left, top) end
 
 --- Accessor Member Functions
 
