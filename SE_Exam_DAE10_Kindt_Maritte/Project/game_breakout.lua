@@ -8,7 +8,6 @@ Ball.__index = Ball
 local Block = {}
 Block.__index = Block
 
-
 --- -------------------------------------
 --- Player Class
 --- -------------------------------------
@@ -95,8 +94,11 @@ function Ball:CheckWindowCollision()
 
 	-- Ball collisions with top & bottom
 	if self.y - self.radius < 0 then
+
 		self.directionY = -self.directionY
 	elseif self.y + self.radius > GAME_ENGINE:GetHeight() then
+
+		GAME_ENGINE:MessageBox("Game Over")
 		self.directionY = -self.directionY
 	end
 end

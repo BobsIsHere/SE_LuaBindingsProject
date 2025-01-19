@@ -38,6 +38,11 @@ function GAME_ENGINE:SetFrameRate(frameRate) end
 --- @return boolean
 function GAME_ENGINE:IsKeyDown(key) end
 
+--- Show Message Box
+--- @param message string
+--- @return nil
+function GAME_ENGINE:MessageBox(message) end
+
 --- Draw Functions
 
 --- Sets Color

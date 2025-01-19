@@ -191,6 +191,10 @@ void Game::BindGameEngineClasses()
 		"SetHeight", &GameEngine::SetHeight,
 		"SetFrameRate", &GameEngine::SetFrameRate,
 		"IsKeyDown", &GameEngine::IsKeyDown,
+		"MessageBox", sol::overload(
+			static_cast<void(GameEngine::*)(const tstring&) const>(&GameEngine::MessageBox),
+			static_cast<void(GameEngine::*)(const TCHAR*) const>(&GameEngine::MessageBox)
+		),
 
 		// Draw Functions
 		"SetColor", &GameEngine::SetColor,
