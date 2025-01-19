@@ -1,10 +1,17 @@
 ---@meta
 
---- #################
+--- -------------------------------------
+--- Callable Variable
+--- -------------------------------------
+callable_this_ptr = nil
+
+--- -------------------------------------
 --- Game Engine Class
---- #################
+--- -------------------------------------
 ---@class GameEngine
 GAME_ENGINE = {}
+
+--- General Member Functions
 
 --- Sets Window Title
 --- @param title string
@@ -31,6 +38,13 @@ function GAME_ENGINE:SetFrameRate(frameRate) end
 --- @return boolean
 function GAME_ENGINE:IsKeyDown(key) end
 
+--- Show Message Box
+--- @param message string
+--- @return nil
+function GAME_ENGINE:MessageBox(message) end
+
+--- Draw Functions
+
 --- Sets Color
 --- @param color DWORD
 --- @return nil
@@ -44,76 +58,78 @@ function GAME_ENGINE:SetColor(color) end
 --- @return boolean
 function GAME_ENGINE:FillRect(left, top, right, bottom) end
 
+--- @param left integer
+--- @param top integer
+--- @param right integer
+--- @param bottom integer
+--- @param opacity integer
+--- @return boolean
+function GAME_ENGINE:FillRect(left, top, right, bottom, opacity) end
+
+--- Makes Filled Oval
+--- @param left integer
+--- @param top integer
+--- @param right integer
+--- @param bottom integer
+--- @return boolean
+function GAME_ENGINE:FillOval(left, top, right, bottom) end
+
+--- @param left integer
+--- @param top integer
+--- @param right integer
+--- @param bottom integer
+--- @param opacity integer
+--- @return boolean
+function GAME_ENGINE:FillOval(left, top, right, bottom, opacity) end
+
+--- Draw String
+--- @param text string
+--- @param left integer
+--- @param top integer
+--- @return integer
+function GAME_ENGINE:DrawString(text, left, top) end
+
+--- @param text string
+--- @param left integer
+--- @param top integer
+--- @param right integer
+--- @param bottom integer
+--- @return integer
+function GAME_ENGINE:DrawString(text, left, top, right, bottom) end
+
+--- Draw Bitmap
+
+
+--- Accessor Member Functions
+
 --- Get Screen Width
 --- @return integer
 function GAME_ENGINE:GetWidth() end
 
 --- Get Screen Height
 --- @return integer
-    function GAME_ENGINE:GetHeight() end
+function GAME_ENGINE:GetHeight() end
 
 --- Predefined Game Engine
 --- @type GameEngine
 GAME_ENGINE.GAME_ENGINE = GAME_ENGINE
 
 
---- ############
---- Caller Class
---- ############
---- @class Caller
-
---- Add Action Listener
---- @param target Callable
---- @return boolean
-function Caller:AddActionListener(target) end
-
---- Remove Action Listener
---- @param target Callable
---- @return boolean
-function Caller:RemoveActionListener(target) end
-
---- ##############
---- Callable Class
---- ##############
---- @class Callable
-
---- Call Action
---- @param caller Caller
---- @return nil
-function Callable:CallAction(caller) end
-
---- ############
+--- -------------------------------------
 --- Button Class
---- ############
---- @class Button : Caller
---- Represents a UI Button that can be interacted with.
+--- -------------------------------------
+--- @class Button
 Button = {}
 
---- Add Action Listener
---- @param target Callable
---- @return boolean
-function Button:AddActionListener(target) 
-    target:AddActionListener(self)
-end
-
---- Button Constructor
---- @param text string
+--- Constructor
+--- @param label string
 --- @return Button
-function Button:new(text) 
-    local self = setmetatable({}, Button)
-    self.text = text
-
-    return self
-end
+function Button.new(label) end
 
 --- @return Button
-function Button:new() 
-    local self = setmetatable({}, Button)
+function Button.new() end
 
-    return self
-end
-
---- Set Bounds
+--- Set Button Bounds
 --- @param left integer
 --- @param top integer
 --- @param right integer
@@ -121,12 +137,12 @@ end
 --- @return nil
 function Button:SetBounds(left, top, right, bottom) end
 
---- Set Text
+--- Set Button text
 --- @param text string
 --- @return nil
 function Button:SetText(text) end
 
---- Set Fond
+--- Set Button Font
 --- @param font_name string
 --- @param bold boolean
 --- @param italic boolean
@@ -135,35 +151,68 @@ function Button:SetText(text) end
 --- @return nil
 function Button:SetFont(font_name, bold, italic, underline, size) end
 
---- Set Enabled
+--- Set Button Enabled
 --- @param enable boolean
 --- @return nil
 function Button:SetEnabled(enable) end
 
---- Show
+--- Show Button
 --- @return nil
 function Button:Show() end
 
---- Hide
+--- Hide Button
 --- @return nil
 function Button:Hide() end
 
----Gets the bounds of the button.
----@return table A table containing the bounds of the button (left, top, right, bottom).
-function Button:GetBounds() end
-
----Gets the text displayed on the button.
----@return string The text displayed on the button.
-function Button:GetText() end
-
----Gets the type of the caller.
----@return Type The type of the caller (e.g., Button, TextBox).
-function Button:GetType() end
+--- Add Action Listener
+--- @param callable Callable
+--- @return boolean
+function Button:AddActionListener(callable) end
 
 
---- ##########
+--- -------------------------------------
+--- Audio Class
+--- -------------------------------------
+--- @class Audio
+Audio = {}
+
+--- Constructor
+--- @param file_name string
+--- @return Audio
+function Audio.new(file_name) end
+
+--- Tick Function
+--- @return nil
+function Audio:Tick() end
+
+--- Play Functions
+--- @param msecStart integer
+--- @param msecStop integer
+--- @return nil
+function Audio:Play(msecStart, msecStop) end
+
+--- Pause Function
+--- @return nil
+function Audio:Pause() end
+
+--- Stop Function
+--- @return nil
+function Audio:Stop() end
+
+--- Set Volume
+--- @param volume integer
+--- @return nil
+function Audio:SetVolume(volume) end
+
+--- Set Repeat
+--- @param set_repeat boolean
+--- @return nil
+function Audio:SetRepeat(set_repeat) end
+
+
+--- -------------------------------------
 --- Game Class
---- ##########
+--- -------------------------------------
 --- @class GAME
 GAME = {}
 

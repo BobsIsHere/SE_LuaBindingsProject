@@ -116,6 +116,61 @@ GAME_ENGINE.GAME_ENGINE = GAME_ENGINE
 
 
 --- -------------------------------------
+--- Button Class
+--- -------------------------------------
+--- @class Button
+Button = {}
+
+--- Constructor
+--- @param label string
+--- @return Button
+function Button.new(label) end
+
+--- @return Button
+function Button.new() end
+
+--- Set Button Bounds
+--- @param left integer
+--- @param top integer
+--- @param right integer
+--- @param bottom integer
+--- @return nil
+function Button:SetBounds(left, top, right, bottom) end
+
+--- Set Button text
+--- @param text string
+--- @return nil
+function Button:SetText(text) end
+
+--- Set Button Font
+--- @param font_name string
+--- @param bold boolean
+--- @param italic boolean
+--- @param underline boolean
+--- @param size integer
+--- @return nil
+function Button:SetFont(font_name, bold, italic, underline, size) end
+
+--- Set Button Enabled
+--- @param enable boolean
+--- @return nil
+function Button:SetEnabled(enable) end
+
+--- Show Button
+--- @return nil
+function Button:Show() end
+
+--- Hide Button
+--- @return nil
+function Button:Hide() end
+
+--- Add Action Listener
+--- @param callable Callable
+--- @return boolean
+function Button:AddActionListener(callable) end
+
+
+--- -------------------------------------
 --- Audio Class
 --- -------------------------------------
 --- @class Audio

@@ -178,6 +178,9 @@ end
 
 --- Initialize Variables
 local score = 0
+local is_menu = true
+
+local play_button = {}
 
 local player = Player:new(280, 550, 100, 20)
 local ball = Ball:new(330, 540, 10, 3,1, -1)
@@ -221,12 +224,21 @@ function Start()
 	game_over_audio = Audio.new("resources/442127__euphrosyyn__8-bit-game-over.mp3")
 	hit_audio = Audio.new("resources/277213__thedweebman__8-bit-hit.mp3")
 
-	game_audio:SetVolume(100)
+	play_button = Button.new("Play Game")
+
+	-- Set up Audio
+	game_audio:SetVolume(50)
 	game_audio:SetRepeat(true)
 	game_audio:Play(0, -1)
 
-	hit_audio:SetVolume(100)
+	hit_audio:SetVolume(50)
 	hit_audio:SetRepeat(false)
+
+	-- Set up Play Button
+	play_button:SetBounds(160, 200, 460, 250)
+	play_button:AddActionListener(callable_this_ptr)
+	play_button:SetFont("Arial", true, false, false, 45)
+	play_button:Show()
 end
 
 function End()
@@ -234,46 +246,54 @@ function End()
 end
 
 function Paint()
-	-- Draw Player
-	player:Draw()
 
-	-- Draw Ball
-	ball:Draw()
+	if is_menu then
+		GAME_ENGINE:SetColor(tonumber("000000", 16))
+		GAME_ENGINE:FillRect(0, 0, GAME_ENGINE:GetWidth(), GAME_ENGINE:GetHeight())
+	else
+		-- Draw Player
+		player:Draw()
 
-	-- Draw Blocks
-	for _, block in ipairs(blocks) do
-		block:Draw()
-	end
+		-- Draw Ball
+		ball:Draw()
 
-	-- Draw Score
-	GAME_ENGINE:SetColor(tonumber("FFFFFF", 16))
-	GAME_ENGINE:DrawString("Score: " .. score, 10, 10)
+		-- Draw Blocks
+		for _, block in ipairs(blocks) do
+			block:Draw()
+		end
+
+		-- Draw Score
+		GAME_ENGINE:SetColor(tonumber("FFFFFF", 16))
+		GAME_ENGINE:DrawString("Score: " .. score, 10, 10)
+		end
 end
 
 function Tick()
 
-	-- Audio Tick
-	game_audio:Tick()
-	hit_audio:Tick()
+	if not is_menu then
+		-- Audio Tick
+		game_audio:Tick()
+		hit_audio:Tick()
 
-	-- Move Functions
-	ball:Move()
+		-- Move Functions
+		ball:Move()
 
-	-- Collision Functions
-	ball:CheckWindowCollision()
-	ball:CheckPlayerCollision(player)
+		-- Collision Functions
+		ball:CheckWindowCollision()
+		ball:CheckPlayerCollision(player)
 
-	for i = #blocks, 1, -1 do
-		local block = blocks[i]
+		for i = #blocks, 1, -1 do
+			local block = blocks[i]
 
-		if block then
-			if block:CheckBallCollision(ball) then
-				-- Remove the block from the table after collision
-				table.remove(blocks, i)
-				-- Play sound
-				hit_audio:Play(0, -1)
-				-- Increase Score
-				score = score + 10
+			if block then
+				if block:CheckBallCollision(ball) then
+					-- Remove the block from the table after collision
+					table.remove(blocks, i)
+					-- Play sound
+					hit_audio:Play(0, -1)
+					-- Increase Score
+					score = score + 10
+				end
 			end
 		end
 	end
@@ -293,12 +313,14 @@ end
 
 function CheckKeyboard()
 
-	if GAME_ENGINE:IsKeyDown(0x41) then
-		-- Move Left
-		player:ChangeDirection(-1)
-	elseif GAME_ENGINE:IsKeyDown(0x44) then
-		-- Move Right
-		player:ChangeDirection(1)
+	if not is_menu then
+		if GAME_ENGINE:IsKeyDown(0x41) then
+			-- Move Left
+			player:ChangeDirection(-1)
+		elseif GAME_ENGINE:IsKeyDown(0x44) then
+			-- Move Right
+			player:ChangeDirection(1)
+		end
 	end
 end
 
@@ -307,5 +329,6 @@ function KeyPressed(key)
 end
 
 function CallAction(caller)
-	print("Call Action called")
+	is_menu = false
+	play_button:Hide()
 end

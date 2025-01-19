@@ -223,6 +223,22 @@ void Game::BindGameEngineClasses()
 		"GAME_ENGINE", sol::readonly_property([]() { return GAME_ENGINE; })
 	);
 
+	m_Lua.new_usertype<Button>("Button",
+		// Constructors
+		sol::constructors<Button(const tstring&), Button()>(),
+
+		// Methods
+		"SetBounds", &Button::SetBounds,
+		"SetText", &Button::SetText,
+		"SetFont", &Button::SetFont,
+		"SetEnabled", &Button::SetEnabled,
+		"Show", &Button::Show,
+		"Hide", &Button::Hide,
+
+		//Callable Functions
+		"AddActionListener", &Button::AddActionListener
+	);
+
 	m_Lua.new_usertype<Audio>("Audio",
 		//Constructor
 		sol::constructors<Audio(const tstring&)>(),
@@ -255,14 +271,4 @@ void Game::BindGameFunctions()
 		"KeyPressed", &Game::KeyPressed,
 		"CallAction", &Game::CallAction
 	);
-}
-
-tstring Game::ToTString(const std::string& string)
-{
-	return tstring(string.begin(), string.end());
-}
-
-std::string Game::ToStdString(const tstring& string)
-{
-	return std::string(string.begin(), string.end());
 }
