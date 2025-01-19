@@ -114,38 +114,40 @@ GAME_ENGINE.GAME_ENGINE = GAME_ENGINE
 --- Audio Class
 --- -------------------------------------
 --- @class Audio
-AUDIO = {}
+Audio = {}
 
 --- Constructor
 --- @param file_name string
 --- @return Audio
-function AUDIO.new(file_name) end
+function Audio.new(file_name) end
 
 --- Tick Function
 --- @return nil
-function AUDIO:Tick() end
+function Audio:Tick() end
 
 --- Play Functions
+--- @param msecStart integer
+--- @param msecStop integer
 --- @return nil
-function AUDIO:Play() end
+function Audio:Play(msecStart, msecStop) end
 
 --- Pause Function
 --- @return nil
-function AUDIO:Pause() end
+function Audio:Pause() end
 
 --- Stop Function
 --- @return nil
-function AUDIO:Stop() end
+function Audio:Stop() end
 
 --- Set Volume
 --- @param volume integer
 --- @return nil
-function AUDIO:SetVolume(volume) end
+function Audio:SetVolume(volume) end
 
 --- Set Repeat
 --- @param set_repeat boolean
 --- @return nil
-function AUDIO:SetRepeat(set_repeat) end
+function Audio:SetRepeat(set_repeat) end
 
 
 --- -------------------------------------

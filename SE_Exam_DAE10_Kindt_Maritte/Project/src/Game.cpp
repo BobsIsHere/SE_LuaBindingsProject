@@ -49,7 +49,7 @@ void Game::Initialize()
 void Game::Start()
 {
 	sol::function luaStart = m_Lua["Start"];
-	luaStart();
+	luaStart(); 
 }
 
 void Game::End()
@@ -229,8 +229,7 @@ void Game::BindGameEngineClasses()
 		"Pause", &Audio::Pause,
 		"Stop", &Audio::Stop,
 		"SetVolume", &Audio::SetVolume,
-		"SetRepeat", &Audio::SetRepeat,
-		"AddActionListener", &Caller::AddActionListener
+		"SetRepeat", &Audio::SetRepeat
 	);
 
 	m_Lua["GAME_ENGINE"] = GAME_ENGINE;

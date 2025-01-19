@@ -109,7 +109,7 @@ function Ball:CheckPlayerCollision(player)
 
 			self.y = player.y - self.radius - 1
 			
-			-- Calculate angle
+			-- Calculate relative hit
 			local relativeHit = (self.x - (player.x + player.width / 2)) / (player.width / 2)
 			-- Calculate angle
 			local angle = relativeHit * math.pi 
@@ -124,9 +124,6 @@ function Ball:CheckPlayerCollision(player)
 
 			-- Adjust vertical direction to always bounce upward
 			self.directionY = -math.ceil(self.speed * math.abs(math.sin(angle)))
-
-			print(self.directionX)
-			print(self.directionY)
 		end
 	end
 end
@@ -218,13 +215,16 @@ function Initialize()
 end
 
 function Start()
-	game_audio = AUDIO.new("resources/583613__evretro__8-bit-brisk-music-loop.wav")
-	game_over_audio = AUDIO.new("resources/442127__euphrosyyn__8-bit-game-over.wav")
-	hit_audio = AUDIO.new("resources/277213__thedweebman__8-bit-hit.wav")
+	game_audio = Audio.new("resources/583613__evretro__8-bit-brisk-music-loop.mp3")
+	game_over_audio = Audio.new("resources/442127__euphrosyyn__8-bit-game-over.mp3")
+	hit_audio = Audio.new("resources/277213__thedweebman__8-bit-hit.mp3")
 
 	game_audio:SetVolume(100)
 	game_audio:SetRepeat(true)
-	game_audio:Play()
+	game_audio:Play(0, -1)
+
+	hit_audio:SetVolume(100)
+	hit_audio:SetRepeat(false)
 end
 
 function End()
@@ -249,8 +249,15 @@ function Paint()
 end
 
 function Tick()
+
+	-- Audio Tick
+	game_audio:Tick()
+	hit_audio:Tick()
+
+	-- Move Functions
 	ball:Move()
 
+	-- Collision Functions
 	ball:CheckWindowCollision()
 	ball:CheckPlayerCollision(player)
 
@@ -261,6 +268,8 @@ function Tick()
 			if block:CheckBallCollision(ball) then
 				-- Remove the block from the table after collision
 				table.remove(blocks, i)
+				-- Play sound
+				hit_audio:Play(0, -1)
 				-- Increase Score
 				score = score + 10
 			end
