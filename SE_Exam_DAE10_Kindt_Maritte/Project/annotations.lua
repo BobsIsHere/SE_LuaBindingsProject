@@ -1,6 +1,11 @@
 ---@meta
 
 --- -------------------------------------
+--- Callable Variable
+--- -------------------------------------
+callable_this_ptr = nil
+
+--- -------------------------------------
 --- Game Engine Class
 --- -------------------------------------
 ---@class GameEngine
@@ -106,107 +111,41 @@ GAME_ENGINE.GAME_ENGINE = GAME_ENGINE
 
 
 --- -------------------------------------
---- Caller Class
+--- Audio Class
 --- -------------------------------------
---- @class Caller
+--- @class Audio
+AUDIO = {}
 
---- Add Action Listener
---- @param target Callable
---- @return boolean
-function Caller:AddActionListener(target) end
+--- Constructor
+--- @param file_name string
+--- @return Audio
+function AUDIO.new(file_name) end
 
---- Remove Action Listener
---- @param target Callable
---- @return boolean
-function Caller:RemoveActionListener(target) end
-
---- -------------------------------------
---- Callable Class
---- -------------------------------------
---- @class Callable
-
---- Call Action
---- @param caller Caller
+--- Tick Function
 --- @return nil
-function Callable:CallAction(caller) end
+function AUDIO:Tick() end
 
---- -------------------------------------
---- Button Class
---- -------------------------------------
---- @class Button : Caller
---- Represents a UI Button that can be interacted with.
-Button = {}
-
---- Add Action Listener
---- @param target Callable
---- @return boolean
-function Button:AddActionListener(target) 
-    target:AddActionListener(self)
-end
-
---- Button Constructor
---- @param text string
---- @return Button
-function Button:new(text) 
-    local self = setmetatable({}, Button)
-    self.text = text
-
-    return self
-end
-
---- @return Button
-function Button:new() 
-    local self = setmetatable({}, Button)
-
-    return self
-end
-
---- Set Bounds
---- @param left integer
---- @param top integer
---- @param right integer
---- @param bottom integer
+--- Play Functions
 --- @return nil
-function Button:SetBounds(left, top, right, bottom) end
+function AUDIO:Play() end
 
---- Set Text
---- @param text string
+--- Pause Function
 --- @return nil
-function Button:SetText(text) end
+function AUDIO:Pause() end
 
---- Set Fond
---- @param font_name string
---- @param bold boolean
---- @param italic boolean
---- @param underline boolean
---- @param size integer
+--- Stop Function
 --- @return nil
-function Button:SetFont(font_name, bold, italic, underline, size) end
+function AUDIO:Stop() end
 
---- Set Enabled
---- @param enable boolean
+--- Set Volume
+--- @param volume integer
 --- @return nil
-function Button:SetEnabled(enable) end
+function AUDIO:SetVolume(volume) end
 
---- Show
+--- Set Repeat
+--- @param set_repeat boolean
 --- @return nil
-function Button:Show() end
-
---- Hide
---- @return nil
-function Button:Hide() end
-
----Gets the bounds of the button.
----@return table A table containing the bounds of the button (left, top, right, bottom).
-function Button:GetBounds() end
-
----Gets the text displayed on the button.
----@return string The text displayed on the button.
-function Button:GetText() end
-
----Gets the type of the caller.
----@return Type The type of the caller (e.g., Button, TextBox).
-function Button:GetType() end
+function AUDIO:SetRepeat(set_repeat) end
 
 
 --- -------------------------------------

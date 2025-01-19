@@ -219,50 +219,22 @@ void Game::BindGameEngineClasses()
 		"GAME_ENGINE", sol::readonly_property([]() { return GAME_ENGINE; })
 	);
 
-	m_Lua.new_usertype<Callable>("Callable",
-		"CallAction", &Callable::CallAction
-	);
+	m_Lua.new_usertype<Audio>("Audio",
+		//Constructor
+		sol::constructors<Audio(const tstring&)>(),
 
-	m_Lua.new_usertype<Caller>("Caller",
-		// Methods
-		"AddActionListener", &Caller::AddActionListener,
-		"RemoveActionListener", &Caller::RemoveActionListener
-	);
-
-	m_Lua.new_usertype<Button>("Button",
-		// Constructors
-		sol::constructors<Button(const tstring&), Button()>(),
-		// specify inheritance
-		sol::base_classes, sol::bases<Caller>(),
-
-		// Methods
-		"SetBounds", &Button::SetBounds, 
-		"SetText", [this](Button& btn, const std::string& text) 
-		{
-			// Convert to tstring
-			btn.SetText(ToTString(text));
-		},
-		"SetFont", [this](Button& btn, const std::string& fontName, bool bold, bool italic, bool underline, int size) 
-		{
-			// Convert to tstring
-			btn.SetFont(ToTString(fontName), bold, italic, underline, size);
-		},
-		"SetEnabled", &Button::SetEnabled,
-		"Show", &Button::Show,
-		"Hide", &Button::Hide,
-
-		// Read-Only properties
-		"GetBounds", sol::readonly_property(&Button::GetBounds),
-		"GetText", sol::readonly_property([this](Button& btn) -> std::string
-		{
-			// Convert to std::string
-			tstring text = btn.GetText();
-			return ToStdString(text);  
-		}),
-		"GetType", sol::readonly_property(&Button::GetType)
+		//Methods
+		"Tick", &Audio::Tick,
+		"Play", &Audio::Play,
+		"Pause", &Audio::Pause,
+		"Stop", &Audio::Stop,
+		"SetVolume", &Audio::SetVolume,
+		"SetRepeat", &Audio::SetRepeat,
+		"AddActionListener", &Caller::AddActionListener
 	);
 
 	m_Lua["GAME_ENGINE"] = GAME_ENGINE;
+	m_Lua["callable_this_ptr"] = static_cast<Callable*>(this); 
 }
 
 void Game::BindGameFunctions()

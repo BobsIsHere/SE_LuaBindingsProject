@@ -8,6 +8,7 @@ Ball.__index = Ball
 local Block = {}
 Block.__index = Block
 
+
 --- -------------------------------------
 --- Player Class
 --- -------------------------------------
@@ -56,23 +57,25 @@ end
 --- @param x integer
 --- @param y integer
 --- @param radius integer
---- @param speedX integer
---- @param speedY integer
-function Ball:new(x,y,radius,speedX,speedY)
+--- @param speed integer
+--- @param directionX integer
+--- @param directionY integer
+function Ball:new(x,y,radius, speed,directionX,directionY)
 	local self = setmetatable({}, Ball)
 	self.x = x
 	self.y = y
 	self.radius = radius
-	self.speedX = speedX
-	self.speedY = speedY
+	self.speed = speed
+	self.directionX = directionX
+	self.directionY = directionY
 
 	return self
 end
 
 --- Move Ball in Window
 function Ball:Move()
-	self.x = self.x + self.speedX
-	self.y = self.y + self.speedY
+	self.x = self.x + self.directionX * self.speed
+	self.y = self.y + self.directionY * self.speed
 end
 
 --- Draw Ball
@@ -85,16 +88,16 @@ end
 function Ball:CheckWindowCollision()
 	-- Ball collision with left & right
 	if self.x - self.radius < 0 then
-		self.speedX = -self.speedX
+		self.directionX = -self.directionX
 	elseif self.x + self.radius > GAME_ENGINE:GetWidth() then
-		self.speedX = -self.speedX
+		self.directionX = -self.directionX
 	end
 
 	-- Ball collisions with top & bottom
 	if self.y - self.radius < 0 then
-		self.speedY = -self.speedY
+		self.directionY = -self.directionY
 	elseif self.y + self.radius > GAME_ENGINE:GetHeight() then
-		self.speedY = -self.speedY
+		self.directionY = -self.directionY
 	end
 end
 
@@ -103,11 +106,27 @@ end
 function Ball:CheckPlayerCollision(player)
 	if self.x + self.radius > player.x and self.x - self.radius < player.x + player.width then
 		if self.y + self.radius > player.y and self.y - self.radius < player.y + player.height then
-			-- Calculate angle
-			local angle = (((self.x - player.x) / player.width) - 0.5) * math.pi
 
-			self.speedX = self.speedX * math.cos(angle)
-			self.speedY = -self.speedY
+			self.y = player.y - self.radius - 1
+			
+			-- Calculate angle
+			local relativeHit = (self.x - (player.x + player.width / 2)) / (player.width / 2)
+			-- Calculate angle
+			local angle = relativeHit * math.pi 
+
+			self.directionX = math.floor(self.speed * math.cos(angle))
+			-- Keep the horizontal direction consistent with the relative hit
+			if relativeHit < 0 and self.directionX > 0 then
+				self.directionX = -self.directionX
+			elseif relativeHit > 0 and self.directionX < 0 then
+				self.directionX = -self.directionX
+			end
+
+			-- Adjust vertical direction to always bounce upward
+			self.directionY = -math.ceil(self.speed * math.abs(math.sin(angle)))
+
+			print(self.directionX)
+			print(self.directionY)
 		end
 	end
 end
@@ -146,7 +165,7 @@ function Block:CheckBallCollision(ball)
 	if ball.x + ball.radius > self.x and ball.x - ball.radius < self.x + self.width then
 		-- Check for top & bottom collision
 		if ball.y + ball.radius > self.y and ball.y - ball.radius < self.y + self.height then
-			ball.speedY = -ball.speedY
+			ball.directionY = -ball.directionY
 			return true
 		end
 	end
@@ -162,7 +181,11 @@ end
 local score = 0
 
 local player = Player:new(280, 550, 100, 20)
-local ball = Ball:new(330, 540, 10, 4, -4)
+local ball = Ball:new(330, 540, 10, 3,1, -1)
+
+local game_audio = {}
+local game_over_audio = {}
+local hit_audio = {}
 
 local blocks = {}
 
@@ -195,7 +218,13 @@ function Initialize()
 end
 
 function Start()
+	game_audio = AUDIO.new("resources/583613__evretro__8-bit-brisk-music-loop.wav")
+	game_over_audio = AUDIO.new("resources/442127__euphrosyyn__8-bit-game-over.wav")
+	hit_audio = AUDIO.new("resources/277213__thedweebman__8-bit-hit.wav")
 
+	game_audio:SetVolume(100)
+	game_audio:SetRepeat(true)
+	game_audio:Play()
 end
 
 function End()

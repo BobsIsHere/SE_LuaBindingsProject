@@ -53,6 +53,15 @@ add_custom_target(CopyScripts ALL
     COMMENT "Copying Lua scripts to output directory"
 )
 
+# Copy the 'resources' folder to the output directory
+add_custom_command(
+    TARGET ${EXE_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    ${CMAKE_CURRENT_SOURCE_DIR}/resources
+    $<TARGET_FILE_DIR:${EXE_NAME}>/resources
+    COMMENT "Copying resources folder to output directory"
+)
+
 FOREACH(LUA_SOURCE IN LISTS LUA_SOURCES)
     add_custom_command(TARGET CopyScripts POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
