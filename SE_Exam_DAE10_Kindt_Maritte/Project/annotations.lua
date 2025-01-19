@@ -211,6 +211,27 @@ function Audio:SetRepeat(set_repeat) end
 
 
 --- -------------------------------------
+--- Bitmap Class
+--- -------------------------------------
+--- @class Bitmap
+Bitmap = {}
+
+--- Constructor
+--- @param file_name string
+--- @param create_alpha_channel boolean
+--- @return Bitmap
+function Bitmap.new(file_name, create_alpha_channel) end
+
+--- Get Bitmap Width
+--- @return integer
+function Bitmap:GetWidth() end
+
+--- Get Bitmap Height
+--- @return integer
+function Bitmap:GetHeight() end
+
+
+--- -------------------------------------
 --- Game Class
 --- -------------------------------------
 --- @class GAME

@@ -252,6 +252,15 @@ void Game::BindGameEngineClasses()
 		"SetRepeat", &Audio::SetRepeat
 	);
 
+	m_Lua.new_usertype<Bitmap>("Bitmap",
+		//Constructor
+		sol::constructors<Bitmap(const tstring&, bool)>(),
+
+		//Methods
+		"GetWidth", &Bitmap::GetWidth,
+		"GetHeight", &Bitmap::GetHeight
+	);
+
 	m_Lua["GAME_ENGINE"] = GAME_ENGINE;
 	m_Lua["callable_this_ptr"] = static_cast<Callable*>(this); 
 }

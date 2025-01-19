@@ -182,6 +182,8 @@ local is_menu = true
 
 local play_button = {}
 
+local menu_photo = {}
+
 local player = Player:new(280, 550, 100, 20)
 local ball = Ball:new(330, 540, 10, 3,1, -1)
 
