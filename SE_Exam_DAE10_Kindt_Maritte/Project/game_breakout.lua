@@ -165,6 +165,7 @@ end
 --- @param player Player
 --- @return boolean
 function Block:CheckBallCollision(ball)
+
 	-- Check for left & right collision
 	if ball.x + ball.radius > self.x and ball.x - ball.radius < self.x + self.width then
 		-- Check for top & bottom collision
@@ -175,6 +176,7 @@ function Block:CheckBallCollision(ball)
 	end
 
 	return false
+
 end
 
 --- -------------------------------------
@@ -195,6 +197,7 @@ function PowerUp.new(x,y,width,height,type)
 	self.width = width
 	self.height = height
 	self.type = type
+	self.is_applied = false
 
 	return self
 end
@@ -241,8 +244,11 @@ local play_button = {}
 
 local menu_bit_map = {}
 
+local balls = {}
+
 local player = Player:new(280, 550, 100, 20)
 local ball = Ball:new(330, 540, 10, 3,1, -1)
+table.insert(balls, ball)
 
 local game_audio = {}
 local game_over_audio = {}
@@ -334,7 +340,9 @@ function Paint()
 		player:Draw()
 
 		-- Draw Ball
-		ball:Draw()
+		for _, ball in ipairs(balls) do
+			ball:Draw()
+		end
 
 		-- Draw Blocks
 		for _, block in ipairs(blocks) do
@@ -360,33 +368,41 @@ function Tick()
 		game_audio:Tick()
 		hit_audio:Tick()
 
-		-- Move Functions
-		ball:Move()
+		local power_up_types = {"wider_paddle", "extra_ball"}
 
-		-- Collision Functions
-		ball:CheckWindowCollision()
-		ball:CheckPlayerCollision(player)
+		for _, ball in ipairs(balls) do
+			-- Move Function
+			ball:Move()
 
-		-- Check for each block
-		for i = #blocks, 1, -1 do
-			local block = blocks[i]
+			-- Collision Function
+			ball:CheckWindowCollision()
+			ball:CheckPlayerCollision(player)
 
-			if block then
-				if block:CheckBallCollision(ball) then
-					-- Remove the block from the table after collision
-					table.remove(blocks, i)
-					-- Play sound
-					hit_audio:Play(0, -1)
-					-- Increase Score
-					score = score + 10
+			-- Check for each block
+			for i = #blocks, 1, -1 do
+				local block = blocks[i]
 
-					-- Random change for power-up
-					if math.random(1, 100) <= 20 then
-						local power_up = PowerUp.new(block.x, block.y, 20, 20, "wider_paddle")
-						table.insert(power_ups, power_up)
+				if block then
+					if block:CheckBallCollision(ball) then
+						-- Remove the block from the table after collision
+						table.remove(blocks, i)
+						-- Play sound
+						hit_audio:Play(0, -1)
+						-- Increase Score
+						score = score + 10
+
+						-- Choose a random type from the power-up types table
+						local random_type = power_up_types[math.random(#power_up_types)]
+
+						-- Random change for power-up
+						if math.random(1, 100) <= 20 then
+							local power_up = PowerUp.new(block.x, block.y, 20, 20, random_type)
+							table.insert(power_ups, power_up)
+						end
 					end
 				end
 			end
+
 		end
 
 		-- Check for each power-up
@@ -395,11 +411,21 @@ function Tick()
 			power_up:Move(3)
 
 			if power_up:CheckCollision(player) then
-			-- Apply the power-up's effect
-				if power_up.type == "wider_paddle" then
-					player.width = player.width + 2
+				if not power_up.is_applied then
+					-- Apply the power-up's effect only once
+					power_up.is_applied = true
+
+					if power_up.type == "wider_paddle" then
+						player.width = player.width + 1
+					elseif power_up.type == "extra_ball" then
+						local ball = Ball:new(330, 540, 10, 3,1, -1)
+						table.insert(balls, ball)
+					end
+					
+					table.remove(power_up, idx) -- Remove collected power-up
+
 				end
-				table.remove(power_up, idx) -- Remove collected power-up
+				
 			elseif power_up.y > GAME_ENGINE:GetHeight() then
 				table.remove(power_up, idx) -- Remove off-screen power-up
 			end
