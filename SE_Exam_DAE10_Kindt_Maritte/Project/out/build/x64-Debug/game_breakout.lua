@@ -151,7 +151,7 @@ end
 
 --- Draw Block
 function Block:Draw()
-	GAME_ENGINE:SetColor(tonumber("BE030C", 16))
+	GAME_ENGINE:SetColor(self.color)
 	GAME_ENGINE:FillRect(self.x, self.y, self.x + self.width, self.y + self.height)
 end
 
@@ -193,6 +193,16 @@ local hit_audio = {}
 
 local blocks = {}
 
+-- Rainbow Color Variable
+local rainbow_colors = {
+	"0000FF",
+	"007FFF",
+	"00FFFF",
+	"00FF00",
+	"FF0000",
+	"FF008B" 
+}
+
 -- Generate 3 rows of blocks, with 10 blocks
 local rows = 6
 local cols = 9
@@ -209,6 +219,10 @@ for row = 1, rows do
 
 		-- Create new block & insert in table
 		local block = Block.new(x, y, blockWidth, blockHeight)
+
+		-- Assign color based on row
+		block.color = tonumber(rainbow_colors[row], 16)
+
 		table.insert(blocks,block)
 	end
 end
@@ -253,7 +267,6 @@ function Paint()
 	GAME_ENGINE:FillWindowRect(tonumber("000000", 16))
 
 	if is_menu then
-		--GAME_ENGINE:SetColor(tonumber("000000", 16))
 		GAME_ENGINE:FillRect(0, 0, GAME_ENGINE:GetWidth(), GAME_ENGINE:GetHeight())
 		GAME_ENGINE:DrawBitmap(menu_bit_map, 175, 10)
 	else
