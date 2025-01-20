@@ -250,9 +250,9 @@ function End()
 end
 
 function Paint()
+	GAME_ENGINE:FillWindowRect(tonumber("000000", 16))
 
 	if is_menu then
-		GAME_ENGINE:SetColor(tonumber("000000", 16))
 		GAME_ENGINE:FillRect(0, 0, GAME_ENGINE:GetWidth(), GAME_ENGINE:GetHeight())
 		GAME_ENGINE:DrawBitmap(menu_bit_map, 175, 10)
 	else

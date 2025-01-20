@@ -60,9 +60,6 @@ void Game::End()
 
 void Game::Paint(RECT rect) const
 {
-	// Add To Lua Bindings
-	GAME_ENGINE->FillWindowRect(0x000000);
-
 	sol::function luaPaint = m_Lua["Paint"];
 	luaPaint(); 
 }
@@ -76,19 +73,6 @@ void Game::Tick()
 void Game::MouseButtonAction(bool isLeft, bool isDown, int x, int y, WPARAM wParam)
 {	
 	// Insert code for a mouse button action
-
-	/* Example:
-	if (isLeft == true && isDown == true) // is it a left mouse click?
-	{
-		if ( x > 261 && x < 261 + 117 ) // check if click lies within x coordinates of choice
-		{
-			if ( y > 182 && y < 182 + 33 ) // check if click also lies within y coordinates of choice
-			{
-				GAME_ENGINE->MessageBox(_T("Clicked."));
-			}
-		}
-	}
-	*/
 
 	sol::function luaMouseButtonAction = m_Lua["MouseButtonAction"];
 	luaMouseButtonAction(isLeft, isDown, x, y);
@@ -104,16 +88,6 @@ void Game::MouseMove(int x, int y, WPARAM wParam)
 {	
 	// Insert code that needs to execute when the mouse pointer moves across the game window
 
-	/* Example:
-	if ( x > 261 && x < 261 + 117 ) // check if mouse position is within x coordinates of choice
-	{
-		if ( y > 182 && y < 182 + 33 ) // check if mouse position also is within y coordinates of choice
-		{
-			GAME_ENGINE->MessageBox("Mouse move.");
-		}
-	}
-	*/
-
 	sol::function luaMouseMove = m_Lua["MouseMove"];
 	luaMouseMove(x, y); 
 }
@@ -122,13 +96,6 @@ void Game::CheckKeyboard()
 {	
 	// Here you can check if a key is pressed down
 	// Is executed once per frame 
-
-	/* Example:
-	if (GAME_ENGINE->IsKeyDown(_T('K'))) xIcon -= xSpeed;
-	if (GAME_ENGINE->IsKeyDown(_T('L'))) yIcon += xSpeed;
-	if (GAME_ENGINE->IsKeyDown(_T('M'))) xIcon += xSpeed;
-	if (GAME_ENGINE->IsKeyDown(_T('O'))) yIcon -= ySpeed;
-	*/
 
 	sol::function luaCheckKeyboard = m_Lua["CheckKeyboard"];
 	luaCheckKeyboard();  
@@ -141,26 +108,6 @@ void Game::KeyPressed(TCHAR key)
 	// Insert code that needs to execute when a key is pressed
 	// The function is executed when the key is *released*
 	// You need to specify the list of keys with the SetKeyList() function
-
-	/* Example:
-	switch (key)
-	{
-	case _T('K'): case VK_LEFT:
-		GAME_ENGINE->MessageBox("Moving left.");
-		break;
-	case _T('L'): case VK_DOWN:
-		GAME_ENGINE->MessageBox("Moving down.");
-		break;
-	case _T('M'): case VK_RIGHT:
-		GAME_ENGINE->MessageBox("Moving right.");
-		break;
-	case _T('O'): case VK_UP:
-		GAME_ENGINE->MessageBox("Moving up.");
-		break;
-	case VK_ESCAPE:
-		GAME_ENGINE->MessageBox("Escape menu.");
-	}
-	*/
 
 	std::string keyStr{};
 
@@ -198,6 +145,7 @@ void Game::BindGameEngineClasses()
 
 		// Draw Functions
 		"SetColor", &GameEngine::SetColor,
+		"FillWindowRect", &GameEngine::FillWindowRect,  
 		"FillRect", sol::overload(
 			static_cast<bool(GameEngine::*)(int, int, int, int) const>(&GameEngine::FillRect),
 			static_cast<bool(GameEngine::*)(int, int, int, int, int) const>(&GameEngine::FillRect)

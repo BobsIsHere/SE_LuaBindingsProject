@@ -56,6 +56,12 @@ function GAME_ENGINE:SetColor(color) end
 --- @param right integer
 --- @param bottom integer
 --- @return boolean
+
+--- Fill Window
+--- @param color DWORD
+--- @return boolean
+function GAME_ENGINE:FillWindowRect(color) end
+
 function GAME_ENGINE:FillRect(left, top, right, bottom) end
 
 --- @param left integer
