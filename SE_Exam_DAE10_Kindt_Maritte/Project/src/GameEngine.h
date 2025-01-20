@@ -79,7 +79,7 @@ public:
 	void		SetWidth			(int width);
 	void		SetHeight			(int height);
 
-	bool		GoFullscreen		();		
+	bool		GoFullscreen		();	
 	bool		GoWindowedMode		();
 	void		ShowMousePointer	(bool value);
 	void		Quit				();

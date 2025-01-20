@@ -134,37 +134,63 @@ void Game::BindGameEngineClasses()
 	m_Lua.new_usertype<GameEngine>("GameEngine",
 		// General Member Functions
 		"SetTitle", &GameEngine::SetTitle,
+		"SetWindowPosition", &GameEngine::SetWindowPosition,
+		"SetWindowRegion", &GameEngine::SetWindowRegion,
+		"SetKeyList", &GameEngine::SetKeyList,
+		"SetFrameRate", &GameEngine::SetFrameRate,
 		"SetWidth", &GameEngine::SetWidth,
 		"SetHeight", &GameEngine::SetHeight,
+
+		"GoFullscreen", &GameEngine::GoFullscreen,
+		"GoWindowedMode", &GameEngine::GoWindowedMode,
+		"ShowMousePointer", &GameEngine::ShowMousePointer,
 		"Quit", &GameEngine::Quit,
-		"SetFrameRate", &GameEngine::SetFrameRate,
+
+		"HasWindowRegion", & GameEngine::HasWindowRegion,
+		"IsFullscreen", & GameEngine::IsFullscreen,
+
 		"IsKeyDown", &GameEngine::IsKeyDown,
-		"MessageContinue", &GameEngine::MessageContinue,
+
 		"MessageBox", sol::overload(
 			static_cast<void(GameEngine::*)(const tstring&) const>(&GameEngine::MessageBox),
 			static_cast<void(GameEngine::*)(const TCHAR*) const>(&GameEngine::MessageBox)
 		),
+		"MessageContinue", & GameEngine::MessageContinue,
 
 		// Draw Functions
 		"SetColor", &GameEngine::SetColor,
-		"FillWindowRect", &GameEngine::FillWindowRect,  
+
+		"FillWindowRect", &GameEngine::FillWindowRect, 
+
+		"DrawLine", & GameEngine::DrawLine,
+
+		"DrawRect", & GameEngine::DrawRect,
 		"FillRect", sol::overload(
 			static_cast<bool(GameEngine::*)(int, int, int, int) const>(&GameEngine::FillRect),
 			static_cast<bool(GameEngine::*)(int, int, int, int, int) const>(&GameEngine::FillRect)
 		),
+		"DrawRoundRect", & GameEngine::DrawRoundRect,
+		"FillRoundRect", & GameEngine::FillRoundRect,
 		"DrawOval", & GameEngine::DrawOval,
 		"FillOval", sol::overload(
 			static_cast<bool(GameEngine::*)(int, int, int, int) const>(&GameEngine::FillOval),
 			static_cast<bool(GameEngine::*)(int, int, int, int, int) const>(&GameEngine::FillOval)
 		),
+		"DrawArc", & GameEngine::DrawArc,
+		"FillArc", & GameEngine::FillArc,
+
 		"DrawString", sol::overload(
 			static_cast<int(GameEngine::*)(const tstring&, int, int) const>(&GameEngine::DrawString),
 			static_cast<int(GameEngine::*)(const tstring&, int, int, int, int) const>(&GameEngine::DrawString)
 		),
+
 		"DrawBitmap", sol::overload(
 			static_cast<bool(GameEngine::*)(const Bitmap*, int, int) const>(&GameEngine::DrawBitmap),
 			static_cast<bool(GameEngine::*)(const Bitmap*, int, int, RECT) const>(&GameEngine::DrawBitmap)
 		),
+
+		"GetDrawColor", & GameEngine::GetDrawColor,
+		"Repaint", & GameEngine::Repaint,
 
 		// Accessor Member Functions
 		"GetWidth", &GameEngine::GetWidth,
