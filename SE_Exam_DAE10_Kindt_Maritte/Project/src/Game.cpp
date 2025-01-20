@@ -136,8 +136,10 @@ void Game::BindGameEngineClasses()
 		"SetTitle", &GameEngine::SetTitle,
 		"SetWidth", &GameEngine::SetWidth,
 		"SetHeight", &GameEngine::SetHeight,
+		"Quit", &GameEngine::Quit,
 		"SetFrameRate", &GameEngine::SetFrameRate,
 		"IsKeyDown", &GameEngine::IsKeyDown,
+		"MessageContinue", &GameEngine::MessageContinue,
 		"MessageBox", sol::overload(
 			static_cast<void(GameEngine::*)(const tstring&) const>(&GameEngine::MessageBox),
 			static_cast<void(GameEngine::*)(const TCHAR*) const>(&GameEngine::MessageBox)
@@ -150,6 +152,7 @@ void Game::BindGameEngineClasses()
 			static_cast<bool(GameEngine::*)(int, int, int, int) const>(&GameEngine::FillRect),
 			static_cast<bool(GameEngine::*)(int, int, int, int, int) const>(&GameEngine::FillRect)
 		),
+		"DrawOval", & GameEngine::DrawOval,
 		"FillOval", sol::overload(
 			static_cast<bool(GameEngine::*)(int, int, int, int) const>(&GameEngine::FillOval),
 			static_cast<bool(GameEngine::*)(int, int, int, int, int) const>(&GameEngine::FillOval)

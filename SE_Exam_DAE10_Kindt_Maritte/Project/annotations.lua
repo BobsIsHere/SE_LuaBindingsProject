@@ -28,6 +28,10 @@ function GAME_ENGINE:SetWidth(width) end
 --- @return nil
 function GAME_ENGINE:SetHeight(height) end
 
+--- Quit Game
+--- @return nil
+function GAME_ENGINE:Quit() end
+
 --- Sets Window Frame Rate
 --- @param frameRate integer
 --- @return nil
@@ -37,6 +41,11 @@ function GAME_ENGINE:SetFrameRate(frameRate) end
 --- @param key integer
 --- @return boolean
 function GAME_ENGINE:IsKeyDown(key) end
+
+--- Show Message Continue Box
+--- @param message string
+--- @return boolean
+function GAME_ENGINE:MessageContinue(message) end
 
 --- Show Message Box
 --- @param message string
@@ -71,6 +80,14 @@ function GAME_ENGINE:FillRect(left, top, right, bottom) end
 --- @param opacity integer
 --- @return boolean
 function GAME_ENGINE:FillRect(left, top, right, bottom, opacity) end
+
+--- Makes Oval
+--- @param left integer
+--- @param top integer
+--- @param right integer
+--- @param bottom integer
+--- @return boolean
+function GAME_ENGINE:DrawOval(left, top, right, bottom) end
 
 --- Makes Filled Oval
 --- @param left integer

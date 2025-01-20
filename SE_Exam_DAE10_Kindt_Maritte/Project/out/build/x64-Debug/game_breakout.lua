@@ -8,6 +8,9 @@ Ball.__index = Ball
 local Block = {}
 Block.__index = Block
 
+local PowerUp = {}
+PowerUp.__index = PowerUp
+
 --- -------------------------------------
 --- Player Class
 --- -------------------------------------
@@ -97,9 +100,11 @@ function Ball:CheckWindowCollision()
 
 		self.directionY = -self.directionY
 	elseif self.y + self.radius > GAME_ENGINE:GetHeight() then
-
-		GAME_ENGINE:MessageBox("Game Over")
 		self.directionY = -self.directionY
+
+		if GAME_ENGINE:MessageContinue("Game Over") then
+			GAME_ENGINE:Quit()
+		end
 	end
 end
 
@@ -173,6 +178,58 @@ function Block:CheckBallCollision(ball)
 end
 
 --- -------------------------------------
+--- PowerUp Class
+--- -------------------------------------
+
+--- PowerUp Constructor
+--- @param x integer
+--- @param y integer
+--- @param width integer
+--- @param height integer
+--- @param type string
+--- @return PowerUp
+function PowerUp.new(x,y,width,height,type)
+	local self = setmetatable({}, PowerUp)
+	self.x = x
+	self.y = y
+	self.width = width
+	self.height = height
+	self.type = type
+
+	return self
+end
+
+--- Move Function
+--- @param speed number
+function PowerUp:Move(speed)
+	self.y = self.y + speed
+end
+
+--- Check Collision
+--- @param player Player
+--- @return boolean
+function PowerUp:CheckCollision(player)
+	if self.x < player.x + player.width and self.x + self.width > player.x then
+		if self.y < player.y + player.height and self.y + self.height > player.y then
+			return true
+		end
+	end
+
+	return false
+end
+
+--- Draw Function
+function PowerUp:Draw()
+	if self.type == "wider_paddle" then
+		GAME_ENGINE:SetColor(tonumber("00FF00", 16)) -- Green
+	elseif self.type == "extra_ball" then
+		GAME_ENGINE:SetColor(tonumber("FFFF00", 16)) -- Yellow
+	end
+
+	GAME_ENGINE:DrawOval(self.x, self.y, self.x + self.width, self.y + self.height)
+end
+
+--- -------------------------------------
 --- Game Class
 --- -------------------------------------
 
@@ -192,6 +249,8 @@ local game_over_audio = {}
 local hit_audio = {}
 
 local blocks = {}
+
+local power_ups = {}
 
 -- Rainbow Color Variable
 local rainbow_colors = {
@@ -264,6 +323,7 @@ function End()
 end
 
 function Paint()
+
 	GAME_ENGINE:FillWindowRect(tonumber("000000", 16))
 
 	if is_menu then
@@ -284,7 +344,13 @@ function Paint()
 		-- Draw Score
 		GAME_ENGINE:SetColor(tonumber("FFFFFF", 16))
 		GAME_ENGINE:DrawString("Score: " .. score, 10, 10)
+
+		-- Draw PowerUp
+		for _, power_up in ipairs(power_ups) do
+			power_up:Draw()
 		end
+	end
+
 end
 
 function Tick()
@@ -301,6 +367,7 @@ function Tick()
 		ball:CheckWindowCollision()
 		ball:CheckPlayerCollision(player)
 
+		-- Check for each block
 		for i = #blocks, 1, -1 do
 			local block = blocks[i]
 
@@ -312,10 +379,34 @@ function Tick()
 					hit_audio:Play(0, -1)
 					-- Increase Score
 					score = score + 10
+
+					-- Random change for power-up
+					if math.random(1, 100) <= 20 then
+						local power_up = PowerUp.new(block.x, block.y, 20, 20, "wider_paddle")
+						table.insert(power_ups, power_up)
+					end
 				end
 			end
 		end
+
+		-- Check for each power-up
+		for idx = #power_ups, 1, -1 do
+			local power_up = power_ups[idx]
+			power_up:Move(3)
+
+			if power_up:CheckCollision(player) then
+			-- Apply the power-up's effect
+				if power_up.type == "wider_paddle" then
+					player.width = player.width + 2
+				end
+				table.remove(power_up, idx) -- Remove collected power-up
+			elseif power_up.y > GAME_ENGINE:GetHeight() then
+				table.remove(power_up, idx) -- Remove off-screen power-up
+			end
+		end
+
 	end
+
 end
 
 function MouseButtonAction(isLeft, isDown, x, y)
@@ -341,6 +432,7 @@ function CheckKeyboard()
 			player:ChangeDirection(1)
 		end
 	end
+
 end
 
 function KeyPressed(key)
