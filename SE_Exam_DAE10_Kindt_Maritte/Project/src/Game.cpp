@@ -131,6 +131,28 @@ void Game::CallAction(Caller* callerPtr)
 
 void Game::BindGameEngineClasses()
 {
+	// WIN32 API Bindings
+	/*m_Lua.new_usertype<RECT>("RECT",
+		sol::constructors<RECT(LONG, LONG, LONG, LONG)>(),
+		"left", &RECT::left,
+		"top", &RECT::top,
+		"right", &RECT::right,
+		"bottom", &RECT::bottom
+	);
+
+	m_Lua.new_usertype<POINT>("POINT",
+		sol::constructors<POINT(LONG, LONG)>(),
+		"x", &POINT::x,
+		"y", &POINT::y
+	);
+
+	m_Lua.new_usertype<SIZE>("SIZE",
+		sol::constructors<SIZE(LONG, LONG)>(),
+		"cx", &SIZE::cx,
+		"cy", &SIZE::cy
+	);*/
+
+	// Game Engine Bindings
 	m_Lua.new_usertype<GameEngine>("GameEngine",
 		// General Member Functions
 		"SetTitle", &GameEngine::SetTitle,
@@ -156,6 +178,12 @@ void Game::BindGameEngineClasses()
 			static_cast<void(GameEngine::*)(const TCHAR*) const>(&GameEngine::MessageBox)
 		),
 		"MessageContinue", & GameEngine::MessageContinue,
+
+		// Text Dimensions
+		"CalculateTextDimensions", sol::overload(
+			static_cast<SIZE(GameEngine::*)(const tstring&, const Font*) const>(&GameEngine::CalculateTextDimensions),
+			static_cast<SIZE(GameEngine::*)(const tstring&, const Font*, RECT) const>(&GameEngine::CalculateTextDimensions)
+		),
 
 		// Draw Functions
 		"SetColor", &GameEngine::SetColor,
@@ -195,11 +223,14 @@ void Game::BindGameEngineClasses()
 		// Accessor Member Functions
 		"GetWidth", &GameEngine::GetWidth,
 		"GetHeight", &GameEngine::GetHeight,
+		"GetFrameRate", & GameEngine::GetFrameRate,
+		"GetFrameDelay", & GameEngine::GetFrameDelay,
 
 		// Game Engine Variable
 		"GAME_ENGINE", sol::readonly_property([]() { return GAME_ENGINE; })
 	);
 
+	// Button Engine Bindings
 	m_Lua.new_usertype<Button>("Button",
 		// Constructors
 		sol::constructors<Button(const tstring&), Button()>(),
@@ -216,6 +247,7 @@ void Game::BindGameEngineClasses()
 		"AddActionListener", &Button::AddActionListener
 	);
 
+	// Audio Engine Bindings
 	m_Lua.new_usertype<Audio>("Audio",
 		//Constructor
 		sol::constructors<Audio(const tstring&)>(),
@@ -229,6 +261,7 @@ void Game::BindGameEngineClasses()
 		"SetRepeat", &Audio::SetRepeat
 	);
 
+	// Bitmap Engine Bindings
 	m_Lua.new_usertype<Bitmap>("Bitmap",
 		//Constructor
 		sol::constructors<Bitmap(const tstring&, bool)>(),
@@ -236,6 +269,38 @@ void Game::BindGameEngineClasses()
 		//Methods
 		"GetWidth", &Bitmap::GetWidth,
 		"GetHeight", &Bitmap::GetHeight
+	);
+
+	// HitRegion Enum
+	sol::table hitRegionShape{ m_Lua.create_named_table("shape", 
+		"ellipse", HitRegion::Shape::Ellipse,
+		"rectangle", HitRegion::Shape::Rectangle) 
+	};
+
+	// HitRegion Engine Bindings
+	m_Lua.new_usertype<HitRegion>("HitRegion",
+		//Constructors
+		sol::constructors<HitRegion(HitRegion::Shape, int, int, int, int),
+						  HitRegion(const POINT*, int),
+						  HitRegion(const Bitmap*, COLORREF, COLORREF)>(),
+
+		//Methods
+		"Move", & HitRegion::Move,
+		"HitTest", sol::overload(
+			static_cast<bool(HitRegion::*)(int, int) const>(&HitRegion::HitTest),
+			static_cast<bool(HitRegion::*)(const HitRegion*) const>(&HitRegion::HitTest)),
+		"CollisionTest", &HitRegion::CollisionTest,
+		"GetBounds", &HitRegion::GetBounds,
+		"Exist", &HitRegion::Exists,
+
+		// Enum
+		"Shape", hitRegionShape
+	);
+
+	// Font Engine Bindings
+	m_Lua.new_usertype<Font>("Font",
+		//Constructor
+		sol::constructors<Font(const tstring&, bool, bool, bool, int)>()
 	);
 
 	m_Lua["GAME_ENGINE"] = GAME_ENGINE;

@@ -5,6 +5,57 @@
 --- -------------------------------------
 callable_this_ptr = nil
 
+
+--- -------------------------------------
+--- WIN32 Variables
+--- -------------------------------------
+--RECT = {}
+--RECT.__index = RECT
+
+--- @param left LONG
+--- @param top LONG
+--- @param right LONG
+--- @param bottom LONG
+--- @return RECT
+--function RECT.new(left, top, right, bottom)
+    --local self = setmetatable({}, RECT)
+    --self.left = left or 0
+    --self.top = top or 0
+    --self.right = right or 0
+    --self.bottom = bottom or 0
+
+    --return self
+--end
+
+--POINT = {}
+--POINT.__index = POINT
+
+--- @param x LONG
+--- @param y LONG
+--- @return POINT
+--function POINT.new(x, y)
+    --local self = setmetatable({}, POINT)
+    --self.x = x or 0
+    --self.y = y or 0
+
+    --return self
+--end
+
+--SIZE = {}
+--SIZE.__index = SIZE
+
+--- @param c_x LONG
+--- @param c_y LONG
+--- @return SIZE
+--function SIZE.new(c_x, c_y)
+    --local self = setmetatable({}, SIZE)
+    --self.c_x = c_x or 0
+    --self.c_y = c_y or 0
+
+    --return self
+--end
+
+
 --- -------------------------------------
 --- Game Engine Class
 --- -------------------------------------
@@ -90,17 +141,26 @@ function GAME_ENGINE:MessageBox(message) end
 function GAME_ENGINE:MessageContinue(message) end
 
 --- Text Dimentions
+--- @param text string
+--- @param font Font
+--- @return SIZE
+function GAME_ENGINE:CalculateTextDimensions(text, font) end
 
+--- @param text string
+--- @param font Font
+--- @param rect RECT
+--- @return SIZE
+function GAME_ENGINE:CalculateTextDimensions(text, font, rect) end
 
 --- Draw Functions
 
 --- Sets Color
---- @param color DWORD
+--- @param color COLORREF
 --- @return nil
 function GAME_ENGINE:SetColor(color) end
 
 --- Fill Window Rectangle
---- @param color DWORD
+--- @param color COLORREF
 --- @return boolean
 function GAME_ENGINE:FillWindowRect(color) end
 
@@ -237,6 +297,14 @@ function GAME_ENGINE:GetWidth() end
 --- @return integer
 function GAME_ENGINE:GetHeight() end
 
+--- Get Frame Rate
+--- @return integer
+function GAME_ENGINE:GetFrameRate() end
+
+--- Get Frame Deay
+--- @return integer
+function GAME_ENGINE:GetFrameDelay() end
+
 --- Predefined Game Engine
 --- @type GameEngine
 GAME_ENGINE.GAME_ENGINE = GAME_ENGINE
@@ -356,6 +424,90 @@ function Bitmap:GetWidth() end
 --- Get Bitmap Height
 --- @return integer
 function Bitmap:GetHeight() end
+
+
+--- -------------------------------------
+--- HitRegion Enum
+--- -------------------------------------
+--- @enum shape
+shape = {
+    ellipse = 0,
+    rectangle = 1
+}
+
+--- -------------------------------------
+--- HitRegion Class
+--- -------------------------------------
+--- @class HitRegion
+HitRegion = {}
+
+--- Enum
+--- @field shape_enum shape
+
+--- Constructors
+--- @param shape shape
+--- @param left integer
+--- @param top integer
+--- @param right integer
+--- @param bottom integer
+--- @return HitRegion
+function HitRegion.new(shape, left, top, right, bottom) end
+
+--- @param point_array POINT
+--- @param number_of_points integer
+--- @return HitRegion
+function HitRegion.new(point_array, number_of_points) end
+
+--- @param bitmap Bitmap
+--- @param c_transparent COLORREF
+--- @param c_tolerance COLORREF
+--- @return HitRegion
+function HitRegion.new(bitmap, c_transparent, c_tolerance) end
+
+--- Move Function
+--- @param delta_x integer
+--- @param delta_y integer
+--- @return nil
+function HitRegion:Move(delta_x, delta_y) end
+
+--- Hit Test Functions
+--- @param x integer
+--- @param y integer
+--- @return boolean
+function HitRegion:HitTest(x, y) end
+
+--- @param region HitRegion
+--- @return boolean
+function HitRegion:HitTest(region) end
+
+--- Collision Test Function
+--- @param region HitRegion
+--- @return POINT
+function HitRegion:CollisionTest(region) end
+
+--- Get Bounds Function
+--- @return RECT
+function HitRegion:GetBounds() end
+
+--- Exists Function
+--- @return boolean
+function HitRegion:Exists() end
+
+
+--- -------------------------------------
+--- Font Class
+--- -------------------------------------
+--- @class Font
+Font = {}
+
+--- Constructor
+--- @param font_name string
+--- @param bold boolean
+--- @param italic boolean
+--- @param underline boolean
+--- @param size integer
+--- @return Font
+function Font.new(font_name, bold, italic, underline, size) end
 
 
 --- -------------------------------------
