@@ -67,102 +67,102 @@ GAME_ENGINE = {}
 --- Sets Window Title
 --- @param title string
 --- @return nil
-function GAME_ENGINE:SetTitle(title) end
+function GAME_ENGINE:set_title(title) end
 
 --- Set Window position
 --- @param left integer
 --- @param top integer
 --- @return nil
-function GAME_ENGINE:SetWindowPosition(left, top) end
+function GAME_ENGINE:set_window_position(left, top) end
 
 --- Set Window Region
 --- @param region HitRegion
 --- @return boolean
-function GAME_ENGINE:SetWindowRegion(region) end
+function GAME_ENGINE:set_window_region(region) end
 
 --- Set Key Listener
 --- @param key_list string
 --- @return nil
-function GAME_ENGINE:SetKeyList(key_list) end
+function GAME_ENGINE:set_key_list(key_list) end
 
 --- Sets Window Frame Rate
 --- @param frameRate integer
 --- @return nil
-function GAME_ENGINE:SetFrameRate(frameRate) end
+function GAME_ENGINE:set_frame_rate(frameRate) end
 
 --- Sets Window Width
 --- @param width integer
 --- @return nil
-function GAME_ENGINE:SetWidth(width) end
+function GAME_ENGINE:set_width(width) end
 
 --- Sets Window Height
 --- @param height integer
 --- @return nil
-function GAME_ENGINE:SetHeight(height) end
+function GAME_ENGINE:set_height(height) end
 
 --- Sets Window Full Screen
 --- @return boolean
-function GAME_ENGINE:GoFullscreen() end
+function GAME_ENGINE:go_fullscreen() end
 
 --- Sets Window Windowed Mode
 --- @return boolean
-function GAME_ENGINE:GoWindowedMode() end
+function GAME_ENGINE:go_windowed_mode() end
 
 --- Shows Mouse Pointer
 --- @param value boolean
 --- @return nil
-function GAME_ENGINE:ShowMousePointer(value) end
+function GAME_ENGINE:show_mouse_pointer(value) end
 
 --- Quit Game
 --- @return nil
-function GAME_ENGINE:Quit() end
+function GAME_ENGINE:quit() end
 
 --- Checks Window Region
 --- @return boolean
-function GAME_ENGINE:HasWindowRegion() end
+function GAME_ENGINE:has_window_region() end
 
 --- Return if Window is Full Screen
 --- @return boolean
-function GAME_ENGINE:IsFullscreen() end
+function GAME_ENGINE:is_fullscreen() end
 
 --- Check What Key is Pressed
 --- @param key integer
 --- @return boolean
-function GAME_ENGINE:IsKeyDown(key) end
+function GAME_ENGINE:is_key_down(key) end
 
 --- Show Message Box
 --- @param message string
 --- @return nil
-function GAME_ENGINE:MessageBox(message) end
+function GAME_ENGINE:message_box(message) end
 
 --- Show Message Continue Box
 --- @param message string
 --- @return boolean
-function GAME_ENGINE:MessageContinue(message) end
+function GAME_ENGINE:message_continue(message) end
 
 --- Text Dimentions
 --- @param text string
 --- @param font Font
 --- @return SIZE
-function GAME_ENGINE:CalculateTextDimensions(text, font) end
+function GAME_ENGINE:calculate_text_dimensions(text, font) end
 
 --- @param text string
 --- @param font Font
 --- @param rect RECT
 --- @return SIZE
-function GAME_ENGINE:CalculateTextDimensions(text, font, rect) end
+function GAME_ENGINE:calculate_text_dimensions(text, font, rect) end
 
 --- Draw Functions
 
 --- Sets Color
 --- @param color COLORREF
 --- @return nil
-function GAME_ENGINE:SetColor(color) end
+function GAME_ENGINE:set_color(color) end
 
 --- Fill Window Rectangle
 --- @param color COLORREF
 --- @return boolean
-function GAME_ENGINE:FillWindowRect(color) end
+function GAME_ENGINE:fill_window_rect(color) end
 
 --- Draws Line
 --- @param x1 integer
@@ -170,7 +170,7 @@ function GAME_ENGINE:FillWindowRect(color) end
 --- @param x2 integer
 --- @param y2 integer
 --- @return boolean
-function GAME_ENGINE:DrawLine(x1, y1, x2, y2) end
+function GAME_ENGINE:draw_line(x1, y1, x2, y2) end
 
 --- Draw Rectangle
 --- @param left integer
@@ -178,7 +178,7 @@ function GAME_ENGINE:DrawLine(x1, y1, x2, y2) end
 --- @param right integer
 --- @param bottom integer
 --- @return boolean
-function GAME_ENGINE:DrawRect(left, top, right, bottom) end
+function GAME_ENGINE:draw_rect(left, top, right, bottom) end
 
 --- Draws Filled Rectangle
 --- @param left integer
@@ -186,7 +186,7 @@ function GAME_ENGINE:DrawRect(left, top, right, bottom) end
 --- @param right integer
 --- @param bottom integer
 --- @return boolean
-function GAME_ENGINE:FillRect(left, top, right, bottom) end
+function GAME_ENGINE:fill_rect(left, top, right, bottom) end
 
 --- @param left integer
 --- @param top integer
@@ -194,7 +194,7 @@ function GAME_ENGINE:FillRect(left, top, right, bottom) end
 --- @param bottom integer
 --- @param opacity integer
 --- @return boolean
-function GAME_ENGINE:FillRect(left, top, right, bottom, opacity) end
+function GAME_ENGINE:fill_rect(left, top, right, bottom, opacity) end
 
 --- Draws Round Rectangle
 --- @param left integer
@@ -203,7 +203,7 @@ function GAME_ENGINE:FillRect(left, top, right, bottom, opacity) end
 --- @param bottom integer
 --- @param radius integer
 --- @return boolean
-function GAME_ENGINE:DrawRoundRect(left, top, right, bottom, radius) end
+function GAME_ENGINE:draw_round_rect(left, top, right, bottom, radius) end
 
 --- Draws Filled Round Rectangle
 --- @param left integer
@@ -212,7 +212,7 @@ function GAME_ENGINE:DrawRoundRect(left, top, right, bottom, radius) end
 --- @param bottom integer
 --- @param radius integer
 --- @return boolean
-function GAME_ENGINE:FillRoundRect(left, top, right, bottom, radius) end
+function GAME_ENGINE:fill_round_rect(left, top, right, bottom, radius) end
 
 --- Draws Oval
 --- @param left integer
@@ -220,7 +220,7 @@ function GAME_ENGINE:FillRoundRect(left, top, right, bottom, radius) end
 --- @param right integer
 --- @param bottom integer
 --- @return boolean
-function GAME_ENGINE:DrawOval(left, top, right, bottom) end
+function GAME_ENGINE:draw_oval(left, top, right, bottom) end
 
 --- Draws Filled Oval
 --- @param left integer
@@ -228,7 +228,7 @@ function GAME_ENGINE:DrawOval(left, top, right, bottom) end
 --- @param right integer
 --- @param bottom integer
 --- @return boolean
-function GAME_ENGINE:FillOval(left, top, right, bottom) end
+function GAME_ENGINE:fill_oval(left, top, right, bottom) end
 
 --- @param left integer
 --- @param top integer
@@ -236,7 +236,7 @@ function GAME_ENGINE:FillOval(left, top, right, bottom) end
 --- @param bottom integer
 --- @param opacity integer
 --- @return boolean
-function GAME_ENGINE:FillOval(left, top, right, bottom, opacity) end
+function GAME_ENGINE:fill_oval(left, top, right, bottom, opacity) end
 
 --- Draws Arc
 --- @param left integer
@@ -246,7 +246,7 @@ function GAME_ENGINE:FillOval(left, top, right, bottom, opacity) end
 --- @param start_degree integer
 --- @param angle integer
 --- @return boolean
-function GAME_ENGINE:DrawArc(left, top, right, bottom, start_degree, angle) end
+function GAME_ENGINE:draw_arc(left, top, right, bottom, start_degree, angle) end
 
 --- Draws Filled Arc
 --- @param left integer
@@ -256,14 +256,14 @@ function GAME_ENGINE:DrawArc(left, top, right, bottom, start_degree, angle) end
 --- @param start_degree integer
 --- @param angle integer
 --- @return boolean
-function GAME_ENGINE:FillArc(left, top, right, bottom, start_degree, angle) end
+function GAME_ENGINE:fill_arc(left, top, right, bottom, start_degree, angle) end
 
 --- Draws String
 --- @param text string
 --- @param left integer
 --- @param top integer
 --- @return integer
-function GAME_ENGINE:DrawString(text, left, top) end
+function GAME_ENGINE:draw_string(text, left, top) end
 
 --- @param text string
 --- @param left integer
@@ -271,39 +271,39 @@ function GAME_ENGINE:DrawString(text, left, top) end
 --- @param right integer
 --- @param bottom integer
 --- @return integer
-function GAME_ENGINE:DrawString(text, left, top, right, bottom) end
+function GAME_ENGINE:draw_string(text, left, top, right, bottom) end
 
 --- Draws Bitmap
 --- @param bit_map Bitmap
 --- @param left integer
 --- @param top integer
-function GAME_ENGINE:DrawBitmap(bit_map, left, top) end
+function GAME_ENGINE:draw_bitmap(bit_map, left, top) end
 
 --- Gets Draw Color
 --- @return DWORD
-function GAME_ENGINE:GetDrawColor() end
+function GAME_ENGINE:get_draw_color() end
 
 --- Repaint
 --- @return boolean
-function GAME_ENGINE:Repaint() end
+function GAME_ENGINE:repaint() end
 
 --- Accessor Member Functions
 
 --- Get Screen Width
 --- @return integer
-function GAME_ENGINE:GetWidth() end
+function GAME_ENGINE:get_width() end
 
 --- Get Screen Height
 --- @return integer
-function GAME_ENGINE:GetHeight() end
+function GAME_ENGINE:get_height() end
 
 --- Get Frame Rate
 --- @return integer
-function GAME_ENGINE:GetFrameRate() end
+function GAME_ENGINE:get_frame_rate() end
 
 --- Get Frame Deay
 --- @return integer
-function GAME_ENGINE:GetFrameDelay() end
+function GAME_ENGINE:get_frame_delay() end
 
 --- Predefined Game Engine
 --- @type GameEngine
@@ -330,12 +330,12 @@ function Button.new() end
 --- @param right integer
 --- @param bottom integer
 --- @return nil
-function Button:SetBounds(left, top, right, bottom) end
+function Button:set_bounds(left, top, right, bottom) end
 
 --- Set Button text
 --- @param text string
 --- @return nil
-function Button:SetText(text) end
+function Button:set_text(text) end
 
 --- Set Button Font
 --- @param font_name string
@@ -344,25 +344,25 @@ function Button:SetText(text) end
 --- @param underline boolean
 --- @param size integer
 --- @return nil
-function Button:SetFont(font_name, bold, italic, underline, size) end
+function Button:set_font(font_name, bold, italic, underline, size) end
 
 --- Set Button Enabled
 --- @param enable boolean
 --- @return nil
-function Button:SetEnabled(enable) end
+function Button:set_enabled(enable) end
 
 --- Show Button
 --- @return nil
-function Button:Show() end
+function Button:show() end
 
 --- Hide Button
 --- @return nil
-function Button:Hide() end
+function Button:hide() end
 
 --- Add Action Listener
 --- @param callable Callable
 --- @return boolean
-function Button:AddActionListener(callable) end
+function Button:add_action_listener(callable) end
 
 
 --- -------------------------------------
@@ -378,31 +378,31 @@ function Audio.new(file_name) end
 
 --- Tick Function
 --- @return nil
-function Audio:Tick() end
+function Audio:tick() end
 
 --- Play Functions
 --- @param msecStart integer
 --- @param msecStop integer
 --- @return nil
-function Audio:Play(msecStart, msecStop) end
+function Audio:play(msecStart, msecStop) end
 
 --- Pause Function
 --- @return nil
-function Audio:Pause() end
+function Audio:pause() end
 
 --- Stop Function
 --- @return nil
-function Audio:Stop() end
+function Audio:stop() end
 
 --- Set Volume
 --- @param volume integer
 --- @return nil
-function Audio:SetVolume(volume) end
+function Audio:set_volume(volume) end
 
 --- Set Repeat
 --- @param set_repeat boolean
 --- @return nil
-function Audio:SetRepeat(set_repeat) end
+function Audio:set_repeat(set_repeat) end
 
 
 --- -------------------------------------
@@ -419,11 +419,11 @@ function Bitmap.new(file_name, create_alpha_channel) end
 
 --- Get Bitmap Width
 --- @return integer
-function Bitmap:GetWidth() end
+function Bitmap:get_width() end
 
 --- Get Bitmap Height
 --- @return integer
-function Bitmap:GetHeight() end
+function Bitmap:get_height() end
 
 
 --- -------------------------------------
@@ -468,30 +468,30 @@ function HitRegion.new(bitmap, c_transparent, c_tolerance) end
 --- @param delta_x integer
 --- @param delta_y integer
 --- @return nil
-function HitRegion:Move(delta_x, delta_y) end
+function HitRegion:move(delta_x, delta_y) end
 
 --- Hit Test Functions
 --- @param x integer
 --- @param y integer
 --- @return boolean
-function HitRegion:HitTest(x, y) end
+function HitRegion:hit_test(x, y) end
 
 --- @param region HitRegion
 --- @return boolean
-function HitRegion:HitTest(region) end
+function HitRegion:hit_test(region) end
 
 --- Collision Test Function
 --- @param region HitRegion
 --- @return POINT
-function HitRegion:CollisionTest(region) end
+function HitRegion:collision_test(region) end
 
 --- Get Bounds Function
 --- @return RECT
-function HitRegion:GetBounds() end
+function HitRegion:get_bounds() end
 
 --- Exists Function
 --- @return boolean
-function HitRegion:Exists() end
+function HitRegion:exist() end
 
 
 --- -------------------------------------
@@ -518,23 +518,23 @@ GAME = {}
 
 --- Initialize
 --- @return nil
-function GAME:Initialize() end
+function GAME:initialize() end
 
 --- Start
 --- @return nil
-function GAME:Start() end
+function GAME:start() end
     
 --- End
 --- @return nil
-function GAME:End() end
+function GAME:game_end() end
 
 --- Paints
 --- @return nil
-function GAME:Paint() end
+function GAME:paint() end
 
 --- Tick
 --- @return nil
-function GAME:Tick() end
+function GAME:tick() end
 
 --- Mouse Button Action
 --- @param isLeft boolean
@@ -542,31 +542,31 @@ function GAME:Tick() end
 --- @param x integer
 --- @param y integer
 --- @return nil
-function GAME:MouseButtonAction(isLeft, isDown, x, y) end
+function GAME:mouse_button_action(isLeft, isDown, x, y) end
 
 --- Mouse Wheel Action
 --- @param x integer
 --- @param y integer
 --- @param distance integer
 --- @return nil
-function GAME:MouseWheelAction(x, y, distance) end
+function GAME:mouse_wheel_action(x, y, distance) end
 
 --- Mouse Move
 --- @param x integer
 --- @param y integer
 --- @return nil
-function GAME:MouseMove(x, y) end
+function GAME:mouse_move(x, y) end
 
 --- Check Keyboard
 --- @return nil
-function GAME:CheckKeyboard() end
+function GAME:check_keyboard() end
 
 --- Key Pressed
 --- @param key string
 --- @return nil
-function GAME:KeyPressed(key) end
+function GAME:key_pressed(key) end
 
 --- Call Action
 --- @param caller Caller
 --- @return nil
-function GAME:CallAction(caller) end
+function GAME:call_action(caller) end

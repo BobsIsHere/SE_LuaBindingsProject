@@ -42,31 +42,31 @@ void Game::Initialize()
 
 	m_Lua["GAME"] = this; 
 
-	sol::function luaInitialize = m_Lua["Initialize"];
+	sol::function luaInitialize = m_Lua["initialize"];
 	luaInitialize();
 }
 
 void Game::Start()
 {
-	sol::function luaStart = m_Lua["Start"];
+	sol::function luaStart = m_Lua["start"];
 	luaStart(); 
 }
 
 void Game::End()
 {
-	sol::function luaEnd = m_Lua["End"];
+	sol::function luaEnd = m_Lua["end"];
 	luaEnd();
 }
 
 void Game::Paint(RECT rect) const
 {
-	sol::function luaPaint = m_Lua["Paint"];
+	sol::function luaPaint = m_Lua["paint"];
 	luaPaint(); 
 }
 
 void Game::Tick()
 {
-	sol::function luaTick = m_Lua["Tick"];
+	sol::function luaTick = m_Lua["tick"];
 	luaTick(); 
 }
 
@@ -74,13 +74,13 @@ void Game::MouseButtonAction(bool isLeft, bool isDown, int x, int y, WPARAM wPar
 {	
 	// Insert code for a mouse button action
 
-	sol::function luaMouseButtonAction = m_Lua["MouseButtonAction"];
+	sol::function luaMouseButtonAction = m_Lua["moues_button_action"];
 	luaMouseButtonAction(isLeft, isDown, x, y);
 }
 
 void Game::MouseWheelAction(int x, int y, int distance, WPARAM wParam)
 {	
-	sol::function luaMouseWheelAction = m_Lua["MouseWheelAction"];
+	sol::function luaMouseWheelAction = m_Lua["mouse_wheel_action"];
 	luaMouseWheelAction(x, y, distance);
 }
 
@@ -88,7 +88,7 @@ void Game::MouseMove(int x, int y, WPARAM wParam)
 {	
 	// Insert code that needs to execute when the mouse pointer moves across the game window
 
-	sol::function luaMouseMove = m_Lua["MouseMove"];
+	sol::function luaMouseMove = m_Lua["mouse_move"];
 	luaMouseMove(x, y); 
 }
 
@@ -97,7 +97,7 @@ void Game::CheckKeyboard()
 	// Here you can check if a key is pressed down
 	// Is executed once per frame 
 
-	sol::function luaCheckKeyboard = m_Lua["CheckKeyboard"];
+	sol::function luaCheckKeyboard = m_Lua["check_keyboard"];
 	luaCheckKeyboard();  
 }
 
@@ -118,14 +118,14 @@ void Game::KeyPressed(TCHAR key)
 	// Create string from character
 	keyStr = std::string(buffer, 1);
 
-	sol::function luaKeyPressed = m_Lua["KeyPressed"];
+	sol::function luaKeyPressed = m_Lua["key_pressed"];
 	luaKeyPressed(keyStr);
 }
 
 void Game::CallAction(Caller* callerPtr)
 {
 	// Insert the code that needs to execute when a Caller (= Button, TextBox, Timer, Audio) executes an action
-	sol::function luaCallAction = m_Lua["CallAction"];
+	sol::function luaCallAction = m_Lua["call_action"];
 	luaCallAction(callerPtr);
 }
 
@@ -155,76 +155,76 @@ void Game::BindGameEngineClasses()
 	// Game Engine Bindings
 	m_Lua.new_usertype<GameEngine>("GameEngine",
 		// General Member Functions
-		"SetTitle", &GameEngine::SetTitle,
-		"SetWindowPosition", &GameEngine::SetWindowPosition,
-		"SetWindowRegion", &GameEngine::SetWindowRegion,
-		"SetKeyList", &GameEngine::SetKeyList,
-		"SetFrameRate", &GameEngine::SetFrameRate,
-		"SetWidth", &GameEngine::SetWidth,
-		"SetHeight", &GameEngine::SetHeight,
+		"set_title", &GameEngine::SetTitle,
+		"set_window_position", &GameEngine::SetWindowPosition,
+		"set_window_region", &GameEngine::SetWindowRegion,
+		"set_key_list", &GameEngine::SetKeyList,
+		"set_frame_rate", &GameEngine::SetFrameRate,
+		"set_width", &GameEngine::SetWidth,
+		"set_height", &GameEngine::SetHeight,
 
-		"GoFullscreen", &GameEngine::GoFullscreen,
-		"GoWindowedMode", &GameEngine::GoWindowedMode,
-		"ShowMousePointer", &GameEngine::ShowMousePointer,
-		"Quit", &GameEngine::Quit,
+		"go_fullscreen", &GameEngine::GoFullscreen,
+		"go_windowed_mode", &GameEngine::GoWindowedMode,
+		"show_mouse_pointer", &GameEngine::ShowMousePointer,
+		"quit", &GameEngine::Quit,
 
-		"HasWindowRegion", & GameEngine::HasWindowRegion,
-		"IsFullscreen", & GameEngine::IsFullscreen,
+		"has_window_region", & GameEngine::HasWindowRegion,
+		"is_fullscreen", & GameEngine::IsFullscreen,
 
-		"IsKeyDown", &GameEngine::IsKeyDown,
+		"is_key_down", &GameEngine::IsKeyDown,
 
-		"MessageBox", sol::overload(
+		"message_box", sol::overload(
 			static_cast<void(GameEngine::*)(const tstring&) const>(&GameEngine::MessageBox),
 			static_cast<void(GameEngine::*)(const TCHAR*) const>(&GameEngine::MessageBox)
 		),
-		"MessageContinue", & GameEngine::MessageContinue,
+		"message_continue", & GameEngine::MessageContinue,
 
 		// Text Dimensions
-		"CalculateTextDimensions", sol::overload(
+		"calculate_text_dimensions", sol::overload(
 			static_cast<SIZE(GameEngine::*)(const tstring&, const Font*) const>(&GameEngine::CalculateTextDimensions),
 			static_cast<SIZE(GameEngine::*)(const tstring&, const Font*, RECT) const>(&GameEngine::CalculateTextDimensions)
 		),
 
 		// Draw Functions
-		"SetColor", &GameEngine::SetColor,
+		"set_color", &GameEngine::SetColor,
 
-		"FillWindowRect", &GameEngine::FillWindowRect, 
+		"fill_window_rect", &GameEngine::FillWindowRect, 
 
-		"DrawLine", & GameEngine::DrawLine,
+		"draw_line", & GameEngine::DrawLine,
 
-		"DrawRect", & GameEngine::DrawRect,
-		"FillRect", sol::overload(
+		"draw_rect", & GameEngine::DrawRect,
+		"fill_rect", sol::overload(
 			static_cast<bool(GameEngine::*)(int, int, int, int) const>(&GameEngine::FillRect),
 			static_cast<bool(GameEngine::*)(int, int, int, int, int) const>(&GameEngine::FillRect)
 		),
-		"DrawRoundRect", & GameEngine::DrawRoundRect,
-		"FillRoundRect", & GameEngine::FillRoundRect,
-		"DrawOval", & GameEngine::DrawOval,
-		"FillOval", sol::overload(
+		"draw_round_rect", & GameEngine::DrawRoundRect,
+		"fill_round_rect", & GameEngine::FillRoundRect,
+		"draw_oval", & GameEngine::DrawOval,
+		"fill_oval", sol::overload(
 			static_cast<bool(GameEngine::*)(int, int, int, int) const>(&GameEngine::FillOval),
 			static_cast<bool(GameEngine::*)(int, int, int, int, int) const>(&GameEngine::FillOval)
 		),
-		"DrawArc", & GameEngine::DrawArc,
-		"FillArc", & GameEngine::FillArc,
+		"draw_arc", & GameEngine::DrawArc,
+		"fill_arc", & GameEngine::FillArc,
 
-		"DrawString", sol::overload(
+		"draw_string", sol::overload(
 			static_cast<int(GameEngine::*)(const tstring&, int, int) const>(&GameEngine::DrawString),
 			static_cast<int(GameEngine::*)(const tstring&, int, int, int, int) const>(&GameEngine::DrawString)
 		),
 
-		"DrawBitmap", sol::overload(
+		"draw_bitmap", sol::overload(
 			static_cast<bool(GameEngine::*)(const Bitmap*, int, int) const>(&GameEngine::DrawBitmap),
 			static_cast<bool(GameEngine::*)(const Bitmap*, int, int, RECT) const>(&GameEngine::DrawBitmap)
 		),
 
-		"GetDrawColor", & GameEngine::GetDrawColor,
-		"Repaint", & GameEngine::Repaint,
+		"get_draw_color", & GameEngine::GetDrawColor,
+		"repaint", & GameEngine::Repaint,
 
 		// Accessor Member Functions
-		"GetWidth", &GameEngine::GetWidth,
-		"GetHeight", &GameEngine::GetHeight,
-		"GetFrameRate", & GameEngine::GetFrameRate,
-		"GetFrameDelay", & GameEngine::GetFrameDelay,
+		"get_width", &GameEngine::GetWidth,
+		"get_height", &GameEngine::GetHeight,
+		"get_frame_rate", & GameEngine::GetFrameRate,
+		"get_frame_delay", & GameEngine::GetFrameDelay,
 
 		// Game Engine Variable
 		"GAME_ENGINE", sol::readonly_property([]() { return GAME_ENGINE; })
@@ -236,15 +236,15 @@ void Game::BindGameEngineClasses()
 		sol::constructors<Button(const tstring&), Button()>(),
 
 		// Methods
-		"SetBounds", &Button::SetBounds,
-		"SetText", &Button::SetText,
-		"SetFont", &Button::SetFont,
-		"SetEnabled", &Button::SetEnabled,
-		"Show", &Button::Show,
-		"Hide", &Button::Hide,
+		"set_bounds", &Button::SetBounds,
+		"set_text", &Button::SetText,
+		"set_font", &Button::SetFont,
+		"set_enabled", &Button::SetEnabled,
+		"show", &Button::Show,
+		"hide", &Button::Hide,
 
 		//Callable Functions
-		"AddActionListener", &Button::AddActionListener
+		"add_action_listener", &Button::AddActionListener
 	);
 
 	// Audio Engine Bindings
@@ -253,12 +253,12 @@ void Game::BindGameEngineClasses()
 		sol::constructors<Audio(const tstring&)>(),
 
 		//Methods
-		"Tick", &Audio::Tick,
-		"Play", &Audio::Play,
-		"Pause", &Audio::Pause,
-		"Stop", &Audio::Stop,
-		"SetVolume", &Audio::SetVolume,
-		"SetRepeat", &Audio::SetRepeat
+		"tick", &Audio::Tick,
+		"play", &Audio::Play,
+		"pause", &Audio::Pause,
+		"stop", &Audio::Stop,
+		"set_volume", &Audio::SetVolume,
+		"set_repeat", &Audio::SetRepeat
 	);
 
 	// Bitmap Engine Bindings
@@ -267,8 +267,8 @@ void Game::BindGameEngineClasses()
 		sol::constructors<Bitmap(const tstring&, bool)>(),
 
 		//Methods
-		"GetWidth", &Bitmap::GetWidth,
-		"GetHeight", &Bitmap::GetHeight
+		"get_width", &Bitmap::GetWidth,
+		"get_height", &Bitmap::GetHeight
 	);
 
 	// HitRegion Enum
@@ -285,16 +285,16 @@ void Game::BindGameEngineClasses()
 						  HitRegion(const Bitmap*, COLORREF, COLORREF)>(),
 
 		//Methods
-		"Move", & HitRegion::Move,
-		"HitTest", sol::overload(
+		"move", & HitRegion::Move,
+		"hit_test", sol::overload(
 			static_cast<bool(HitRegion::*)(int, int) const>(&HitRegion::HitTest),
 			static_cast<bool(HitRegion::*)(const HitRegion*) const>(&HitRegion::HitTest)),
-		"CollisionTest", &HitRegion::CollisionTest,
-		"GetBounds", &HitRegion::GetBounds,
-		"Exist", &HitRegion::Exists,
+		"collision_test", &HitRegion::CollisionTest,
+		"get_bounds", &HitRegion::GetBounds,
+		"exist", &HitRegion::Exists,
 
 		// Enum
-		"Shape", hitRegionShape
+		"shape", hitRegionShape
 	);
 
 	// Font Engine Bindings
@@ -310,16 +310,16 @@ void Game::BindGameEngineClasses()
 void Game::BindGameFunctions()
 {
 	m_Lua.new_usertype<Game>("Game",
-		"Initialize", &Game::Initialize,
-		"Start", &Game::Start,
-		"End", &Game::End,
-		"Paint", &Game::Paint,
-		"Tick", &Game::Tick,
-		"MouseButtonAction", &Game::MouseButtonAction,
-		"MouseWheelAction", &Game::MouseWheelAction,
-		"MouseMove", &Game::MouseMove,
-		"CheckKeyboard", &Game::CheckKeyboard,
-		"KeyPressed", &Game::KeyPressed,
-		"CallAction", &Game::CallAction
+		"initialize", &Game::Initialize,
+		"start", &Game::Start,
+		"game_end", &Game::End,
+		"paint", &Game::Paint,
+		"tick", &Game::Tick,
+		"mouse_button_action", &Game::MouseButtonAction,
+		"mouse_wheel_action", &Game::MouseWheelAction,
+		"mouse_move", &Game::MouseMove,
+		"check_keyboard", &Game::CheckKeyboard,
+		"key_pressed", &Game::KeyPressed,
+		"call_action", &Game::CallAction
 	);
 }
