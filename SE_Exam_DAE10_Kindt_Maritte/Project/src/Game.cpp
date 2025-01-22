@@ -31,8 +31,32 @@ void Game::Initialize()
 	m_Lua.open_libraries(sol::lib::math);
 	m_Lua.open_libraries(sol::lib::table);
 
-	//Load & execute the ext. Lua Script
-	m_Lua.script_file("game_breakout.lua");
+	std::string luaScriptPath{};
+	std::string commandLine{ GetCommandLineA() };
+
+	if (commandLine.find(".lua") != std::string::npos)
+	{
+		// Extact file path if present
+		luaScriptPath = commandLine.substr(commandLine.find_last_of('\"') + 2);
+	}
+
+	if (!luaScriptPath.empty())
+	{
+		try
+		{
+			//Load & execute the ext. Lua Script
+			m_Lua.script_file(luaScriptPath);
+		}
+		catch (const std::exception&)
+		{
+			std::cerr << "Error loading Lua file" << std::endl;
+			return;
+		}
+	}
+	else
+	{
+		std::cerr << "No Lua file provided" << std::endl;
+	}
 
 	// Bind GameEngine classes
 	BindGameEngineClasses();

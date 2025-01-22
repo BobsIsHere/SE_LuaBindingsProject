@@ -32,11 +32,11 @@ end
 --- Player Update
 --- direction -1 for left, 1 for right
 --- @param direction integer
-function Player:ChangeDirection(direction)
+function Player:change_direction(direction)
     self.x = self.x + direction * 10
 
     -- Keep Player inside screen
-    local SCREEN_WIDTH = GAME_ENGINE:GetWidth()
+    local SCREEN_WIDTH = GAME_ENGINE:get_width()
 
     if self.x < 0 then
         self.x = 0
@@ -46,9 +46,9 @@ function Player:ChangeDirection(direction)
 end
 
 --- Player Draw
-function Player:Draw()
-    GAME_ENGINE:SetColor(tonumber("575757", 16)) 
-    GAME_ENGINE:FillRect(self.x, self.y, self.x + self.width, self.y + self.height)
+function Player:draw()
+    GAME_ENGINE:set_color(tonumber("575757", 16)) 
+    GAME_ENGINE:fill_rect(self.x, self.y, self.x + self.width, self.y + self.height)
 end
 
 --- -------------------------------------
@@ -75,23 +75,23 @@ function Ball:new(x,y,radius, speed,directionX,directionY)
 end
 
 --- Move Ball in Window
-function Ball:Move()
+function Ball:move()
 	self.x = self.x + self.directionX * self.speed
 	self.y = self.y + self.directionY * self.speed
 end
 
 --- Draw Ball
-function Ball:Draw()
-	GAME_ENGINE:SetColor(tonumber("FFFFFF", 16))
-	GAME_ENGINE:FillOval(self.x, self.y, self.x +  self.radius, self.y +  self.radius)
+function Ball:draw()
+	GAME_ENGINE:set_color(tonumber("FFFFFF", 16))
+	GAME_ENGINE:fill_oval(self.x, self.y, self.x +  self.radius, self.y +  self.radius)
 end
 
 --- Check Window collision
-function Ball:CheckWindowCollision()
+function Ball:check_window_collision()
 	-- Ball collision with left & right
 	if self.x - self.radius < 0 then
 		self.directionX = -self.directionX
-	elseif self.x + self.radius > GAME_ENGINE:GetWidth() then
+	elseif self.x + self.radius > GAME_ENGINE:get_width() then
 		self.directionX = -self.directionX
 	end
 
@@ -99,18 +99,18 @@ function Ball:CheckWindowCollision()
 	if self.y - self.radius < 0 then
 
 		self.directionY = -self.directionY
-	elseif self.y + self.radius > GAME_ENGINE:GetHeight() then
+	elseif self.y + self.radius > GAME_ENGINE:get_height() then
 		self.directionY = -self.directionY
 
-		if GAME_ENGINE:MessageContinue("Game Over") then
-			GAME_ENGINE:Quit()
+		if GAME_ENGINE:message_continue("Game Over") then
+			GAME_ENGINE:quit()
 		end
 	end
 end
 
 --- Check player Collision
 --- @param player Player
-function Ball:CheckPlayerCollision(player)
+function Ball:check_player_collision(player)
 	if self.x + self.radius > player.x and self.x - self.radius < player.x + player.width then
 		if self.y + self.radius > player.y and self.y - self.radius < player.y + player.height then
 
@@ -144,7 +144,7 @@ end
 --- @param y integer
 --- @param width integer
 --- @param height integer
-function Block.new(x,y,width,height)
+function Block:new(x,y,width,height)
 	local self = setmetatable({}, Block)
 	self.x = x
 	self.y = y
@@ -155,16 +155,16 @@ function Block.new(x,y,width,height)
 end
 
 --- Draw Block
-function Block:Draw()
-	GAME_ENGINE:SetColor(self.color)
-	GAME_ENGINE:FillRect(self.x, self.y, self.x + self.width, self.y + self.height)
+function Block:draw()
+	GAME_ENGINE:set_color(self.color)
+	GAME_ENGINE:fill_rect(self.x, self.y, self.x + self.width, self.y + self.height)
 end
 
 --- Check Collision with Ball
 --- @param ball Ball
 --- @param player Player
 --- @return boolean
-function Block:CheckBallCollision(ball)
+function Block:check_ball_collision(ball)
 
 	-- Check for left & right collision
 	if ball.x + ball.radius > self.x and ball.x - ball.radius < self.x + self.width then
@@ -190,7 +190,7 @@ end
 --- @param height integer
 --- @param type string
 --- @return PowerUp
-function PowerUp.new(x,y,width,height,type)
+function PowerUp:new(x,y,width,height,type)
 	local self = setmetatable({}, PowerUp)
 	self.x = x
 	self.y = y
@@ -204,14 +204,14 @@ end
 
 --- Move Function
 --- @param speed number
-function PowerUp:Move(speed)
+function PowerUp:move(speed)
 	self.y = self.y + speed
 end
 
 --- Check Collision
 --- @param player Player
 --- @return boolean
-function PowerUp:CheckCollision(player)
+function PowerUp:check_collision(player)
 	if self.x < player.x + player.width and self.x + self.width > player.x then
 		if self.y < player.y + player.height and self.y + self.height > player.y then
 			return true
@@ -222,14 +222,14 @@ function PowerUp:CheckCollision(player)
 end
 
 --- Draw Function
-function PowerUp:Draw()
+function PowerUp:draw()
 	if self.type == "wider_paddle" then
-		GAME_ENGINE:SetColor(tonumber("00FF00", 16)) -- Green
+		GAME_ENGINE:set_color(tonumber("00FF00", 16)) -- Green
 	elseif self.type == "extra_ball" then
-		GAME_ENGINE:SetColor(tonumber("FFFF00", 16)) -- Yellow
+		GAME_ENGINE:set_color(tonumber("FFFF00", 16)) -- Yellow
 	end
 
-	GAME_ENGINE:DrawOval(self.x, self.y, self.x + self.width, self.y + self.height)
+	GAME_ENGINE:draw_oval(self.x, self.y, self.x + self.width, self.y + self.height)
 end
 
 --- -------------------------------------
@@ -283,7 +283,7 @@ for row = 1, rows do
 		local y = (row - 1) * (blockHeight + blockSpacing) + windowSpacing
 
 		-- Create new block & insert in table
-		local block = Block.new(x, y, blockWidth, blockHeight)
+		local block = Block:new(x, y, blockWidth, blockHeight)
 
 		-- Assign color based on row
 		block.color = tonumber(rainbow_colors[row], 16)
@@ -293,14 +293,14 @@ for row = 1, rows do
 end
 
 --- Game Engine Properties
-function Initialize()
-	GAME_ENGINE:SetTitle("Breakout Lua")
-	GAME_ENGINE:SetWidth(620)
-	GAME_ENGINE:SetHeight(600)
-	GAME_ENGINE:SetFrameRate(60)
+function initialize()
+	GAME_ENGINE:set_title("Breakout Lua")
+	GAME_ENGINE:set_width(620)
+	GAME_ENGINE:set_height(600)
+	GAME_ENGINE:set_frame_rate(60)
 end
 
-function Start()
+function start()
 	game_audio = Audio.new("resources/583613__evretro__8-bit-brisk-music-loop.mp3")
 	game_over_audio = Audio.new("resources/442127__euphrosyyn__8-bit-game-over.mp3")
 	hit_audio = Audio.new("resources/277213__thedweebman__8-bit-hit.mp3")
@@ -310,84 +310,84 @@ function Start()
 	menu_bit_map = Bitmap.new("resources/BreakOutMenu.png", true)
 
 	-- Set up Audio
-	game_audio:SetVolume(50)
-	game_audio:SetRepeat(true)
-	game_audio:Play(0, -1)
+	game_audio:set_volume(50)
+	game_audio:set_repeat(true)
+	game_audio:play(0, -1)
 
-	hit_audio:SetVolume(50)
-	hit_audio:SetRepeat(false)
+	hit_audio:set_volume(50)
+	hit_audio:set_repeat(false)
 
 	-- Set up Play Button
-	play_button:SetBounds(160, 400, 460, 450)
-	play_button:AddActionListener(callable_this_ptr)
-	play_button:SetFont("Arial", true, false, false, 45)
-	play_button:Show()
+	play_button:set_bounds(160, 400, 460, 450)
+	play_button:add_action_listener(callable_this_ptr)
+	play_button:set_font("Arial", true, false, false, 45)
+	play_button:show()
 end
 
-function End()
+function game_end()
 	
 end
 
-function Paint()
+function paint()
 
-	GAME_ENGINE:FillWindowRect(tonumber("000000", 16))
+	GAME_ENGINE:fill_window_rect(tonumber("000000", 16))
 
 	if is_menu then
-		GAME_ENGINE:FillRect(0, 0, GAME_ENGINE:GetWidth(), GAME_ENGINE:GetHeight())
-		GAME_ENGINE:DrawBitmap(menu_bit_map, 175, 10)
+		GAME_ENGINE:fill_rect(0, 0, GAME_ENGINE:get_width(), GAME_ENGINE:get_height())
+		GAME_ENGINE:draw_bitmap(menu_bit_map, 175, 10)
 	else
 		-- Draw Player
-		player:Draw()
+		player:draw()
 
 		-- Draw Ball
 		for _, ball in ipairs(balls) do
-			ball:Draw()
+			ball:draw()
 		end
 
 		-- Draw Blocks
 		for _, block in ipairs(blocks) do
-			block:Draw()
+			block:draw()
 		end
 
 		-- Draw Score
-		GAME_ENGINE:SetColor(tonumber("FFFFFF", 16))
-		GAME_ENGINE:DrawString("Score: " .. score, 10, 10)
+		GAME_ENGINE:set_color(tonumber("FFFFFF", 16))
+		GAME_ENGINE:draw_string("Score: " .. score, 10, 10)
 
 		-- Draw PowerUp
 		for _, power_up in ipairs(power_ups) do
-			power_up:Draw()
+			power_up:draw()
 		end
 	end
 
 end
 
-function Tick()
+function tick()
 
 	if not is_menu then
 		-- Audio Tick
-		game_audio:Tick()
-		hit_audio:Tick()
+		game_audio:tick()
+		hit_audio:tick()
 
 		local power_up_types = {"wider_paddle", "extra_ball"}
 
 		for _, ball in ipairs(balls) do
 			-- Move Function
-			ball:Move()
+			ball:move()
 
 			-- Collision Function
-			ball:CheckWindowCollision()
-			ball:CheckPlayerCollision(player)
+			ball:check_window_collision()
+			ball:check_player_collision(player)
 
 			-- Check for each block
 			for i = #blocks, 1, -1 do
 				local block = blocks[i]
 
 				if block then
-					if block:CheckBallCollision(ball) then
+					if block:check_ball_collision(ball) then
 						-- Remove the block from the table after collision
 						table.remove(blocks, i)
 						-- Play sound
-						hit_audio:Play(0, -1)
+						hit_audio:play(0, -1)
 						-- Increase Score
 						score = score + 10
 
@@ -396,7 +396,7 @@ function Tick()
 
 						-- Random change for power-up
 						if math.random(1, 100) <= 20 then
-							local power_up = PowerUp.new(block.x, block.y, 20, 20, random_type)
+							local power_up = PowerUp:new(block.x, block.y, 20, 20, random_type)
 							table.insert(power_ups, power_up)
 						end
 					end
@@ -408,9 +408,9 @@ function Tick()
 		-- Check for each power-up
 		for idx = #power_ups, 1, -1 do
 			local power_up = power_ups[idx]
-			power_up:Move(3)
+			power_up:move(3)
 
-			if power_up:CheckCollision(player) then
+			if power_up:check_collision(player) then
 				if not power_up.is_applied then
 					-- Apply the power-up's effect only once
 					power_up.is_applied = true
@@ -426,7 +426,7 @@ function Tick()
 
 				end
 				
-			elseif power_up.y > GAME_ENGINE:GetHeight() then
+			elseif power_up.y > GAME_ENGINE:get_height() then
 				table.remove(power_up, idx) -- Remove off-screen power-up
 			end
 		end
@@ -435,37 +435,37 @@ function Tick()
 
 end
 
-function MouseButtonAction(isLeft, isDown, x, y)
+function mouse_button_action(isLeft, isDown, x, y)
 	
 end
 
-function MouseWheelAction(x, y, distance)
+function mouse_wheel_action(x, y, distance)
 	
 end
 
-function MouseMove(x, y) 
+function mouse_move(x, y) 
 	
 end
 
-function CheckKeyboard()
+function check_keyboard()
 
 	if not is_menu then
-		if GAME_ENGINE:IsKeyDown(0x41) then
+		if GAME_ENGINE:is_key_down(0x41) then
 			-- Move Left
-			player:ChangeDirection(-1)
-		elseif GAME_ENGINE:IsKeyDown(0x44) then
+			player:change_direction(-1)
+		elseif GAME_ENGINE:is_key_down(0x44) then
 			-- Move Right
-			player:ChangeDirection(1)
+			player:change_direction(1)
 		end
 	end
 
 end
 
-function KeyPressed(key)
+function key_pressed(key)
 	
 end
 
-function CallAction(caller)
+function call_action(caller)
 	is_menu = false
-	play_button:Hide()
+	play_button:hide()
 end
