@@ -6,6 +6,7 @@
 //-----------------------------------------------------------------
 // Include Files
 //-----------------------------------------------------------------
+#include <algorithm>
 #include "Game.h"
 
 //-----------------------------------------------------------------
@@ -34,10 +35,12 @@ void Game::Initialize()
 	std::string luaScriptPath{};
 	std::string commandLine{ GetCommandLineA() };
 
+	commandLine.erase(std::remove(commandLine.begin(), commandLine.end(), ' '), commandLine.end());
+
 	if (commandLine.find(".lua") != std::string::npos)
 	{
 		// Extact file path if present
-		luaScriptPath = commandLine.substr(commandLine.find_last_of('\"') + 2);
+		luaScriptPath = commandLine.substr(commandLine.find_last_of('\"') + 1);
 	}
 
 	if (!luaScriptPath.empty())
