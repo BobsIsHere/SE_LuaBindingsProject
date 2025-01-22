@@ -111,28 +111,57 @@ end
 --- Check player Collision
 --- @param player Player
 function Ball:check_player_collision(player)
-	if self.x + self.radius > player.x and self.x - self.radius < player.x + player.width then
-		if self.y + self.radius > player.y and self.y - self.radius < player.y + player.height then
+	-- Step 1: Find the closest point on the block (player) to the ball
+    local closest_x = math.max(player.x, math.min(self.x, player.x + player.width))
+    local closest_y = math.max(player.y, math.min(self.y, player.y + player.height))
 
-			self.y = player.y - self.radius - 1
-			
-			-- Calculate relative hit
-			local relativeHit = (self.x - (player.x + player.width / 2)) / (player.width / 2)
-			-- Calculate angle
-			local angle = relativeHit * math.pi 
+    -- Step 2: Calculate the distance from the ball's center to the closest point
+    local distance_x = self.x - closest_x
+    local distance_y = self.y - closest_y
 
-			self.directionX = math.floor(self.speed * math.cos(angle))
-			-- Keep the horizontal direction consistent with the relative hit
-			if relativeHit < 0 and self.directionX > 0 then
-				self.directionX = -self.directionX
-			elseif relativeHit > 0 and self.directionX < 0 then
-				self.directionX = -self.directionX
-			end
+    -- Step 3: Check if there is a collision
+    if (distance_x^2 + distance_y^2) <= (self.radius^2) then
+        -- Step 4: Determine the collision side (horizontal or vertical)
+        if math.abs(distance_x) > math.abs(distance_y) then
+            -- If the collision is on the side (horizontal), flip velocity_x
+            self.velocity_x = -self.velocity_x
+        else
+            -- If the collision is on top or bottom (vertical), flip velocity_y
+            -- Get hit x position [-1, 1]
+            local hitX = (self.x - (player.x + player.width / 2)) / (player.width / 2)
+            
+            -- Avoid zero hitX to prevent non-moving ball
+            if hitX == 0 then
+                hitX = 0.001
+            end
+            
+            -- Calculate the angle of the bounce based on the position of the hit
+            local angle = hitX * math.pi / 4  -- Use smaller angle for a Pong-style bounce
 
-			-- Adjust vertical direction to always bounce upward
-			self.directionY = -math.ceil(self.speed * math.abs(math.sin(angle)))
-		end
-	end
+            -- Normalize the direction using cosine and sine
+            local directionX = math.cos(angle)
+            local directionY = -math.sin(angle)  -- Invert Y for the upward bounce
+
+            -- Normalize direction to prevent speed increase
+            local magnitude = math.sqrt(directionX^2 + directionY^2)
+            directionX = directionX / magnitude
+            directionY = directionY / magnitude
+
+            -- Apply the speed to the direction (but no speed increase on bounce)
+            self.velocity_x = math.ceil(self.speed * directionX)
+            self.velocity_y = math.ceil(self.speed * directionY)
+
+            -- Ensure the ball bounces correctly on the X axis
+            if hitX < 0 and self.velocity_x > 0 then
+                self.velocity_x = -self.velocity_x
+            elseif hitX > 0 and self.velocity_x < 0 then
+                self.velocity_x = -self.velocity_x
+            end
+
+            -- Move the ball slightly out of the player to avoid sticking
+            self.y = player.y - self.radius - 1
+        end
+    end
 end
 
 --- -------------------------------------
@@ -166,16 +195,30 @@ end
 --- @return boolean
 function Block:check_ball_collision(ball)
 
-	-- Check for left & right collision
-	if ball.x + ball.radius > self.x and ball.x - ball.radius < self.x + self.width then
-		-- Check for top & bottom collision
-		if ball.y + ball.radius > self.y and ball.y - ball.radius < self.y + self.height then
-			ball.directionY = -ball.directionY
-			return true
-		end
-	end
+	-- Find the closest point on the rectangle to the ball's center
+    local closestX = math.max(self.x, math.min(ball.x, self.x + self.width))
+    local closestY = math.max(self.y, math.min(ball.y, self.y + self.height))
 
-	return false
+    -- Calculate the distance from the ball's center to this closest point
+    local dx = ball.x - closestX
+    local dy = ball.y - closestY
+    local distance = math.sqrt(dx * dx + dy * dy)
+
+    -- Check if the distance is less than or equal to the ball's radius (collision)
+    if distance <= ball.radius then
+        -- Handle collision: Reverse direction of ball based on which side it hits
+        if math.abs(dx) > math.abs(dy) then
+            -- Horizontal collision (left or right)
+            ball.directionX = -ball.directionX
+        else
+            -- Vertical collision (top or bottom)
+            ball.directionY = -ball.directionY
+        end
+
+        return true
+    end
+
+    return false
 
 end
 

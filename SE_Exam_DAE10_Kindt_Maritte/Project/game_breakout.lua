@@ -122,6 +122,7 @@ function Ball:check_player_collision(player)
 			local angle = relativeHit * math.pi 
 
 			self.directionX = math.floor(self.speed * math.cos(angle))
+			
 			-- Keep the horizontal direction consistent with the relative hit
 			if relativeHit < 0 and self.directionX > 0 then
 				self.directionX = -self.directionX
@@ -166,16 +167,30 @@ end
 --- @return boolean
 function Block:check_ball_collision(ball)
 
-	-- Check for left & right collision
-	if ball.x + ball.radius > self.x and ball.x - ball.radius < self.x + self.width then
-		-- Check for top & bottom collision
-		if ball.y + ball.radius > self.y and ball.y - ball.radius < self.y + self.height then
-			ball.directionY = -ball.directionY
-			return true
-		end
-	end
+	-- Find the closest point on the rectangle to the ball's center
+    local closestX = math.max(self.x, math.min(ball.x, self.x + self.width))
+    local closestY = math.max(self.y, math.min(ball.y, self.y + self.height))
 
-	return false
+    -- Calculate the distance from the ball's center to this closest point
+    local dx = ball.x - closestX
+    local dy = ball.y - closestY
+    local distance = math.sqrt(dx * dx + dy * dy)
+
+    -- Check if the distance is less than or equal to the ball's radius (collision)
+    if distance <= ball.radius then
+        -- Handle collision: Reverse direction of ball based on which side it hits
+        if math.abs(dx) > math.abs(dy) then
+            -- Horizontal collision (left or right)
+            ball.directionX = -ball.directionX
+        else
+            -- Vertical collision (top or bottom)
+            ball.directionY = -ball.directionY
+        end
+
+        return true
+    end
+
+    return false
 
 end
 
