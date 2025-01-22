@@ -81,7 +81,7 @@ void Game::Start()
 
 void Game::End()
 {
-	sol::function luaEnd = m_Lua["end"];
+	sol::function luaEnd = m_Lua["game_end"];
 	luaEnd();
 }
 
@@ -101,7 +101,7 @@ void Game::MouseButtonAction(bool isLeft, bool isDown, int x, int y, WPARAM wPar
 {	
 	// Insert code for a mouse button action
 
-	sol::function luaMouseButtonAction = m_Lua["moues_button_action"];
+	sol::function luaMouseButtonAction = m_Lua["mouse_button_action"];
 	luaMouseButtonAction(isLeft, isDown, x, y);
 }
 
