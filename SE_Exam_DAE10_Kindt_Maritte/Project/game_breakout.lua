@@ -121,7 +121,7 @@ function Ball:check_player_collision(player)
 			-- Calculate angle
 			local angle = relativeHit * math.pi 
 
-			self.directionX = math.floor(self.speed * math.cos(angle))
+			self.directionX = math.ceil(self.speed * math.cos(angle))
 			
 			-- Keep the horizontal direction consistent with the relative hit
 			if relativeHit < 0 and self.directionX > 0 then

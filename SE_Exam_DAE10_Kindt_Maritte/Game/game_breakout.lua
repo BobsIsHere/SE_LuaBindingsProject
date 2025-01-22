@@ -111,57 +111,29 @@ end
 --- Check player Collision
 --- @param player Player
 function Ball:check_player_collision(player)
-	-- Step 1: Find the closest point on the block (player) to the ball
-    local closest_x = math.max(player.x, math.min(self.x, player.x + player.width))
-    local closest_y = math.max(player.y, math.min(self.y, player.y + player.height))
+	if self.x + self.radius > player.x and self.x - self.radius < player.x + player.width then
+		if self.y + self.radius > player.y and self.y - self.radius < player.y + player.height then
 
-    -- Step 2: Calculate the distance from the ball's center to the closest point
-    local distance_x = self.x - closest_x
-    local distance_y = self.y - closest_y
+			self.y = player.y - self.radius - 1
+			
+			-- Calculate relative hit
+			local relativeHit = (self.x - (player.x + player.width / 2)) / (player.width / 2)
+			-- Calculate angle
+			local angle = relativeHit * math.pi 
 
-    -- Step 3: Check if there is a collision
-    if (distance_x^2 + distance_y^2) <= (self.radius^2) then
-        -- Step 4: Determine the collision side (horizontal or vertical)
-        if math.abs(distance_x) > math.abs(distance_y) then
-            -- If the collision is on the side (horizontal), flip velocity_x
-            self.velocity_x = -self.velocity_x
-        else
-            -- If the collision is on top or bottom (vertical), flip velocity_y
-            -- Get hit x position [-1, 1]
-            local hitX = (self.x - (player.x + player.width / 2)) / (player.width / 2)
-            
-            -- Avoid zero hitX to prevent non-moving ball
-            if hitX == 0 then
-                hitX = 0.001
-            end
-            
-            -- Calculate the angle of the bounce based on the position of the hit
-            local angle = hitX * math.pi / 4  -- Use smaller angle for a Pong-style bounce
+			self.directionX = math.floor(self.speed * math.cos(angle))
+			
+			-- Keep the horizontal direction consistent with the relative hit
+			if relativeHit < 0 and self.directionX > 0 then
+				self.directionX = -self.directionX
+			elseif relativeHit > 0 and self.directionX < 0 then
+				self.directionX = -self.directionX
+			end
 
-            -- Normalize the direction using cosine and sine
-            local directionX = math.cos(angle)
-            local directionY = -math.sin(angle)  -- Invert Y for the upward bounce
-
-            -- Normalize direction to prevent speed increase
-            local magnitude = math.sqrt(directionX^2 + directionY^2)
-            directionX = directionX / magnitude
-            directionY = directionY / magnitude
-
-            -- Apply the speed to the direction (but no speed increase on bounce)
-            self.velocity_x = math.ceil(self.speed * directionX)
-            self.velocity_y = math.ceil(self.speed * directionY)
-
-            -- Ensure the ball bounces correctly on the X axis
-            if hitX < 0 and self.velocity_x > 0 then
-                self.velocity_x = -self.velocity_x
-            elseif hitX > 0 and self.velocity_x < 0 then
-                self.velocity_x = -self.velocity_x
-            end
-
-            -- Move the ball slightly out of the player to avoid sticking
-            self.y = player.y - self.radius - 1
-        end
-    end
+			-- Adjust vertical direction to always bounce upward
+			self.directionY = -math.ceil(self.speed * math.abs(math.sin(angle)))
+		end
+	end
 end
 
 --- -------------------------------------

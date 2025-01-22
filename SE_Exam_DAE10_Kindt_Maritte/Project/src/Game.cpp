@@ -32,7 +32,7 @@ void Game::Initialize()
 	m_Lua.open_libraries(sol::lib::math);
 	m_Lua.open_libraries(sol::lib::table);
 
-	std::string luaScriptPath{};
+	std::string luaScriptPath{ "game_breakout.lua" };
 	std::string commandLine{ GetCommandLineA() };
 
 	commandLine.erase(std::remove(commandLine.begin(), commandLine.end(), ' '), commandLine.end());
